@@ -2,4 +2,6 @@
     <string name="app_name">Pruebas</string>
     <string name="addredbtn">AÑADIR RED</string>
     <string name="gestredbtn">GESTIONAR REDES</string>
+    <string name="ocultarswbtn">OCULTAR</string>
+    <string name="mostrarswbtn">MOSTRAR</string>
 </resources>
