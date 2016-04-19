@@ -38,11 +38,23 @@ public class testAdapter extends ArrayAdapter {
         TextView datos1 = (TextView)item.findViewById(R.id.datos1);
         if (arr.get(position).capabilities.contains("WPA")) {
             datos1.setText("WPA/WPA2 PSK");
+        }else if (arr.get(position).capabilities.contains("WEP")){
+            datos1.setText("WEP");
         }else{
             datos1.setText(arr.get(position).capabilities);
         }
         TextView datos2 = (TextView)item.findViewById(R.id.datos2);
-        datos2.setText(String.valueOf(arr.get(position).level));
+        int nSe;
+        if (arr.get(position).level>-25){
+            nSe=4;
+        }else if (arr.get(position).level>-50){
+            nSe=3;
+        }else if (arr.get(position).level>-75){
+            nSe=2;
+        }else{
+            nSe=1;
+        }
+        datos2.setText(String.valueOf(nSe));
         datos2.setVisibility(View.VISIBLE);
 
         return item;

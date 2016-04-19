@@ -54,7 +54,6 @@ public class Index extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         if (v.getId()==R.id.btnMostrar) {
             WifiManager wm = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-            wm.getDhcpInfo();
             ip.setText(intToIp(wm.getDhcpInfo().ipAddress));
             masc.setText(intToIp(wm.getDhcpInfo().netmask));
             puerta.setText(intToIp(wm.getDhcpInfo().gateway));

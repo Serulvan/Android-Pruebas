@@ -16,18 +16,17 @@
         <activity
             android:name=".Index"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Inicio" />
+        <activity android:name=".NuevaRed" />
+        <activity android:name=".Test_cambioDatos" />
+        <activity android:name=".test_int_ip">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Inicio">
-
-
-
-        </activity>
-        <activity android:name=".NuevaRed"></activity>
     </application>
 
 </manifest>
