@@ -4,4 +4,9 @@
     <string name="gestredbtn">GESTIONAR REDES</string>
     <string name="ocultarswbtn">OCULTAR</string>
     <string name="mostrarswbtn">MOSTRAR</string>
+    <string name="nc_btn_avanzado">AVANZADO</string>
+    <string name="d_n_c_ssid">SSID</string>
+    <string name="d_n_c_contraseña">Contraseña</string>
+    <string name="dnc_btn_cancelar">CANCELAR</string>
+    <string name="dnc_btn_continuar">CONTINUAR</string>
 </resources>

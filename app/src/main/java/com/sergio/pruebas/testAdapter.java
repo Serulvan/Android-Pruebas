@@ -44,17 +44,19 @@ public class testAdapter extends ArrayAdapter {
             datos1.setText(arr.get(position).capabilities);
         }
         TextView datos2 = (TextView)item.findViewById(R.id.datos2);
+
+        //50/3=16,6666666 => 17
         int nSe;
-        if (arr.get(position).level>-25){
+        if (arr.get(position).level>-50){
             nSe=4;
-        }else if (arr.get(position).level>-50){
+        }else if (arr.get(position).level>-67){
             nSe=3;
-        }else if (arr.get(position).level>-75){
+        }else if (arr.get(position).level>-84){
             nSe=2;
         }else{
             nSe=1;
         }
-        datos2.setText(String.valueOf(nSe));
+        datos2.setText(String.valueOf(arr.get(position).level));
         datos2.setVisibility(View.VISIBLE);
 
         return item;

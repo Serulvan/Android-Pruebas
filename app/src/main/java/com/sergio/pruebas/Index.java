@@ -1,18 +1,17 @@
 package com.sergio.pruebas;
 
 import android.content.Context;
-import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.net.*;
 import android.net.wifi.WifiManager;
 import android.widget.ToggleButton;
+
+import com.sergio.pruebas.hilos.HiloEscaneoWifi;
 
 public class Index extends AppCompatActivity implements View.OnClickListener{
     private TextView ssid, ip, masc, puerta, dns1, dns2;
@@ -20,7 +19,7 @@ public class Index extends AppCompatActivity implements View.OnClickListener{
     private ToggleButton swButton;
     private TableLayout tl;
 
-    private ListView lv;
+    private ListView lvT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class Index extends AppCompatActivity implements View.OnClickListener{
         btnShow = (Button)findViewById(R.id.btnMostrar);
         swButton = (ToggleButton)findViewById(R.id.swButton);
         tl = (TableLayout)findViewById(R.id.tlDatos);
-        lv=(ListView)findViewById(R.id.lv);
+        lvT =(ListView)findViewById(R.id.lvt);
 
         btnShow.setOnClickListener(this);
         swButton.setOnClickListener(this);
@@ -61,7 +60,7 @@ public class Index extends AppCompatActivity implements View.OnClickListener{
             dns2.setText(intToIp(wm.getDhcpInfo().dns2));
             ssid.setText(wm.getConnectionInfo().getSSID());
 
-            lv.setAdapter(new testAdapter(this, R.layout.wifi_bar, wm.getScanResults()));
+            new HiloEscaneoWifi(lvT,wm, this).execute();
         } else{
             if (!swButton.isChecked()){
                 tl.setVisibility(View.GONE);
