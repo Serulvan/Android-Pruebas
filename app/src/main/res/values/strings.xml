@@ -5,8 +5,16 @@
     <string name="ocultarswbtn">OCULTAR</string>
     <string name="mostrarswbtn">MOSTRAR</string>
     <string name="nc_btn_avanzado">AVANZADO</string>
-    <string name="d_n_c_ssid">SSID</string>
-    <string name="d_n_c_contraseña">Contraseña</string>
+    <string name="dnc_ssid">SSID</string>
+    <string name="dnc_contraseña">Contraseña</string>
     <string name="dnc_btn_cancelar">CANCELAR</string>
     <string name="dnc_btn_continuar">CONTINUAR</string>
+    <string name="dnc_cb_conexionavanzada">Conexión avanzada</string>
+    <string name="dncc_ip">Dirección IP</string>
+    <string name="dncc_mascara">Máscara de subred</string>
+    <string name="dncc_puertaenlace">Puerta de enlace</string>
+
+    <string name="error_ssid_vacio">El campo "SSID" no puede estar vacio.</string>
+    <string name="error_ip_ipnovalida">Introduce una IP válida.</string>
+    <string name="error_ip_mascnovalida">Introduce una máscara de red válida.</string>
 </resources>

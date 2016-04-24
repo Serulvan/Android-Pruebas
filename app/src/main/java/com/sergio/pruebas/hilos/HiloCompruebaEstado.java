@@ -2,9 +2,7 @@ package com.sergio.pruebas.hilos;
 
 import android.os.AsyncTask;
 
-/**
- * Created by Serulvan on 23/04/2016.
- */
+
 public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... params) {

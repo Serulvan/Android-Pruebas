@@ -1,13 +1,26 @@
-package com.sergio.pruebas;
+package com.sergio.pruebas.conexiones;
 
 import java.net.InetAddress;
 
 public class Conexion {
-    private String ssid;
-    private String pass;
-    private InetAddress ip;
-    private InetAddress masc;
-    private InetAddress puerta;
+    private String ssid,pass;
+    private InetAddress ip,masc,puerta;
+
+    public Conexion(String ssid) {
+        this.ssid = ssid;
+    }
+
+    public Conexion(String ssid, String pass) {
+        this.ssid = ssid;
+        this.pass = pass;
+    }
+
+    public Conexion(InetAddress ip, InetAddress masc, InetAddress puerta, String ssid) {
+        this.ip = ip;
+        this.masc = masc;
+        this.puerta = puerta;
+        this.ssid = ssid;
+    }
 
     public Conexion(String ssid, String pass, InetAddress ip, InetAddress masc, InetAddress puerta) {
         this.ssid = ssid;
