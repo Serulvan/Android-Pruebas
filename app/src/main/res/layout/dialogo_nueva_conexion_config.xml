@@ -52,7 +52,7 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="@string/dnc_btn_cancelar"
-            android:id="@+id/dnc_btncancelar"
+            android:id="@+id/dncc_btncancelar"
             android:layout_marginRight="5dp" />
 
         <Button
@@ -60,7 +60,7 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="@string/dnc_btn_continuar"
-            android:id="@+id/dnc_btncontinuar"
+            android:id="@+id/dncc_btncontinuar"
             android:layout_marginLeft="5dp" />
     </LinearLayout>
 

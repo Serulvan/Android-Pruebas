@@ -1,25 +1,23 @@
 package com.sergio.pruebas.conexiones;
 
-import java.net.InetAddress;
+import android.content.SharedPreferences;
 
-public class Conexion {
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Comparator;
+
+public class Conexion implements Comparator {
     private String ssid,pass;
     private InetAddress ip,masc,puerta;
+    private boolean auto;
 
-    public Conexion(String ssid) {
-        this.ssid = ssid;
+    public Conexion() {
     }
 
     public Conexion(String ssid, String pass) {
         this.ssid = ssid;
         this.pass = pass;
-    }
-
-    public Conexion(InetAddress ip, InetAddress masc, InetAddress puerta, String ssid) {
-        this.ip = ip;
-        this.masc = masc;
-        this.puerta = puerta;
-        this.ssid = ssid;
+        auto=true;
     }
 
     public Conexion(String ssid, String pass, InetAddress ip, InetAddress masc, InetAddress puerta) {
@@ -28,6 +26,7 @@ public class Conexion {
         this.ip = ip;
         this.masc = masc;
         this.puerta = puerta;
+        auto=false;
     }
 
     public String getSsid() {
@@ -68,5 +67,10 @@ public class Conexion {
 
     public void setPuerta(InetAddress puerta) {
         this.puerta = puerta;
+    }
+
+    @Override
+    public int compare(Object lhs, Object rhs) {
+        return ((Conexion)lhs).getSsid().compareTo(((Conexion) rhs).getSsid());
     }
 }

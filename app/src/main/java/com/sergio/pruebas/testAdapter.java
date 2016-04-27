@@ -40,6 +40,8 @@ public class testAdapter extends ArrayAdapter {
             datos1.setText("WPA/WPA2 PSK");
         }else if (arr.get(position).capabilities.contains("WEP")){
             datos1.setText("WEP");
+        }else if (arr.get(position).capabilities.contains("IBSS")){
+            datos1.setText("");
         }else{
             datos1.setText(arr.get(position).capabilities);
         }
