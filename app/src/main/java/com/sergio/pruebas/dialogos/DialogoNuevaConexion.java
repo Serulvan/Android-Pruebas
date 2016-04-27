@@ -2,6 +2,7 @@ package com.sergio.pruebas.dialogos;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,7 +12,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sergio.pruebas.R;
+import com.sergio.pruebas.conexiones.Conexion;
 import com.sergio.pruebas.hilos.GestorHilos;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class DialogoNuevaConexion extends Activity implements View.OnClickListener{
 
@@ -54,11 +65,33 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
                 i.putExtra("pass", pass.getText().toString().trim());
                 startActivity(i);
             }else{
-                if (pass.getText().toString().trim().length()==0){
-                    //new Conexion(ssid.getText().toString().trim());
-                } else{
-                    //new Conexion(ssid.getText().toString().trim(),pass.getText().toString().trim());
+                try {
+                    Conexion c = new Conexion(ssid.getText().toString().trim(),pass.getText().toString().trim());
+                    SharedPreferences $$listado = getSharedPreferences("$$listado", MODE_PRIVATE);
+                    String listado = $$listado.getString("$jList", "");
+                    ArrayList<Conexion> listadoConexiones = new ArrayList();
+                    JSONArray jArray;
+                    JSONObject jo;
+                    if (!listado.isEmpty()) {
+                        jo = new JSONObject(listado);
+                        jArray = jo.getJSONArray("conexionList");
+                        for (int i = 0; i < jArray.length(); i++) {
+                            listadoConexiones.add((Conexion)jArray.get(i));
+                        }
+                    }
+                    listadoConexiones.add(c);
+                    Collections.sort(listadoConexiones, new Conexion());
+                    jArray = new JSONArray(listadoConexiones);
+                    SharedPreferences.Editor ed = $$listado.edit();
+                    jo = new JSONObject();
+                    jo.put("conexionList",jArray);
+                    Toast.makeText(this,jo.toString(),Toast.LENGTH_LONG).show();
+                    ed.putString("$jList",jo.toString());
+                    ed.commit();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                finish();
             }
         }
     }

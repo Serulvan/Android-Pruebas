@@ -27,8 +27,8 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
             Intent i = new Intent(this,NuevaConexion.class);
             startActivity(i);
         }else if(v.getId()==btnGest.getId()){
-            //Intent i = new Intent(this,);
-            //startActivity(i);
+            Intent i = new Intent(this,VerConexiones.class);
+            startActivity(i);
         }
     }
 }

@@ -24,14 +24,16 @@
         </activity>
         <activity
             android:name=".NuevaConexion"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".dialogos.DialogoNuevaConexion"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".dialogos.DialogoNuevaConexionConfig"
-            android:theme="@android:style/Theme.Dialog"/>
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".VerConexiones"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

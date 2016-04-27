@@ -13,8 +13,10 @@
     <string name="dncc_ip">Dirección IP</string>
     <string name="dncc_mascara">Máscara de subred</string>
     <string name="dncc_puertaenlace">Puerta de enlace</string>
+    <string name="conexiones_atras">ATRAS</string>
 
     <string name="error_ssid_vacio">El campo "SSID" no puede estar vacio.</string>
     <string name="error_ip_ipnovalida">Introduce una IP válida.</string>
     <string name="error_ip_mascnovalida">Introduce una máscara de red válida.</string>
+    <string name="error_sin_datos">No hay conexiones guardadas</string>
 </resources>

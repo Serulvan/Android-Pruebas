@@ -123,21 +123,26 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
                         InetAddress.getByName(ip.getText().toString()),
                         InetAddress.getByName(mascara.getText().toString()),
                         InetAddress.getByName(puerta.getText().toString()));
-                SharedPreferences $$listado = getSharedPreferences("$$listado",MODE_PRIVATE);
-                String listado = $$listado.getString("$jList", null);
+                SharedPreferences $$listado = getSharedPreferences("$$listado", MODE_PRIVATE);
+                String listado = $$listado.getString("$jList", "");
                 ArrayList<Conexion> listadoConexiones = new ArrayList();
-                JSONArray jArray = new JSONArray(listado);
-                for (int i=0;i<jArray.length();i++){
-                    listadoConexiones.add((Conexion)jArray.get(i));
+                JSONArray jArray;
+                if (!listado.isEmpty()) {
+                    jArray = new JSONArray(listado);
+                    for (int i = 0; i < jArray.length(); i++) {
+                        listadoConexiones.add((Conexion) jArray.get(i));
+                    }
                 }
                 listadoConexiones.add(c);
                 Collections.sort(listadoConexiones,new Conexion());
                 jArray = new JSONArray(listadoConexiones);
                 SharedPreferences.Editor ed = $$listado.edit();
+                ed.putString("$$listado",jArray.toString());
                 ed.commit();
             } catch (JSONException | UnknownHostException e) {
                 e.printStackTrace();
             }
+            finish();
         }
     }
 }

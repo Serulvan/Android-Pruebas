@@ -1,4 +1,4 @@
-package com.sergio.pruebas;
+package com.sergio.pruebas.adaptadores;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
@@ -8,16 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.sergio.pruebas.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-public class testAdapter extends ArrayAdapter {
+public class AdaptadorNuevaConexion extends ArrayAdapter {
     private Context c;
     private List<ScanResult> arr;
     private int view;
-    public testAdapter(Context context, int resource, List<ScanResult> objects) {
+    public AdaptadorNuevaConexion(Context context, int resource, List<ScanResult> objects) {
         super(context, resource, objects);
         c=context;
         arr=objects;

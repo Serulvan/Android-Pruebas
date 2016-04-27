@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.sergio.pruebas.R;
-import com.sergio.pruebas.testAdapter;
+import com.sergio.pruebas.adaptadores.AdaptadorNuevaConexion;
 
 
 public class HiloEscaneoWifi extends AsyncTask<Void,Void,Void> {
@@ -30,7 +29,7 @@ public class HiloEscaneoWifi extends AsyncTask<Void,Void,Void> {
         if (wm.isWifiEnabled()) {
             wm.startScan();
         }
-        lv.setAdapter(new testAdapter(activity, R.layout.wifi_bar, wm.getScanResults()));
+        lv.setAdapter(new AdaptadorNuevaConexion(activity, R.layout.wifi_bar, wm.getScanResults()));
     }
 
     @Override
