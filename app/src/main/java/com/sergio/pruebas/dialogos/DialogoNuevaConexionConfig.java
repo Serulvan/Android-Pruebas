@@ -1,9 +1,9 @@
 package com.sergio.pruebas.dialogos;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -12,15 +12,12 @@ import android.widget.Toast;
 
 import com.sergio.pruebas.R;
 import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.memoria.GestionArchivos;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class DialogoNuevaConexionConfig extends Activity implements View.OnFocusChangeListener, View.OnClickListener{
 
@@ -117,32 +114,46 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
     public void onClick(View v) {
         if(v.getId()==cancelar.getId()){
             finish();
-        } else{
+        } else if (v.getId()==continuar.getId()){
             try {
-                Conexion c = new Conexion(ssid,pass,
-                        InetAddress.getByName(ip.getText().toString()),
-                        InetAddress.getByName(mascara.getText().toString()),
-                        InetAddress.getByName(puerta.getText().toString()));
-                SharedPreferences $$listado = getSharedPreferences("$$listado", MODE_PRIVATE);
-                String listado = $$listado.getString("$jList", "");
-                ArrayList<Conexion> listadoConexiones = new ArrayList();
-                JSONArray jArray;
-                if (!listado.isEmpty()) {
-                    jArray = new JSONArray(listado);
-                    for (int i = 0; i < jArray.length(); i++) {
-                        listadoConexiones.add((Conexion) jArray.get(i));
-                    }
+                if (GestionArchivos.buscarRed(ssid, getSharedPreferences("$$listado", MODE_PRIVATE),this)){
+                        Intent i = new Intent(this, DialogoConfirmarConexionDuplicada.class);
+                        i.putExtra("ssid", ssid);
+                        startActivityForResult(i, 1);
+                }else{
+                    add();
                 }
-                listadoConexiones.add(c);
-                Collections.sort(listadoConexiones,new Conexion());
-                jArray = new JSONArray(listadoConexiones);
-                SharedPreferences.Editor ed = $$listado.edit();
-                ed.putString("$$listado",jArray.toString());
-                ed.commit();
             } catch (JSONException | UnknownHostException e) {
                 e.printStackTrace();
             }
             finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                add();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }
+
+    private void add(){
+        try {
+            Conexion c = new Conexion(ssid,pass,
+                    InetAddress.getByName(ip.getText().toString()),
+                    InetAddress.getByName(mascara.getText().toString()),
+                    InetAddress.getByName(puerta.getText().toString()));
+            SharedPreferences sp = getSharedPreferences("$$listado", MODE_PRIVATE);
+            GestionArchivos.añadirRed(c, sp, this);
+            Toast.makeText(this,R.string.exito_red_añadida,Toast.LENGTH_LONG).show();
+        }
+        catch (JSONException | UnknownHostException e) {
+            e.printStackTrace();
         }
     }
 }

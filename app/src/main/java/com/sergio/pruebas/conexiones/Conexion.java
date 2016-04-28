@@ -1,9 +1,9 @@
 package com.sergio.pruebas.conexiones;
 
-import android.content.SharedPreferences;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Conexion implements Comparator {
@@ -72,5 +72,18 @@ public class Conexion implements Comparator {
     @Override
     public int compare(Object lhs, Object rhs) {
         return ((Conexion)lhs).getSsid().compareTo(((Conexion) rhs).getSsid());
+    }
+
+    public JSONObject toJsonObject() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("ssid",ssid);
+        jo.put("pass",pass);
+        jo.put("auto",auto);
+        if (!auto) {
+            jo.put("ip", ip.getHostAddress());
+            jo.put("masc", masc.getHostAddress());
+            jo.put("puerta", puerta.getHostAddress());
+        }
+        return jo;
     }
 }

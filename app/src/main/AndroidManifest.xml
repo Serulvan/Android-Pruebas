@@ -19,12 +19,13 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".NuevaConexion"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".dialogos.DialogoNuevaConexion"
             android:theme="@android:style/Theme.Dialog" />
@@ -32,8 +33,12 @@
             android:name=".dialogos.DialogoNuevaConexionConfig"
             android:theme="@android:style/Theme.Dialog" />
         <activity
+            android:name=".dialogos.DialogoConfirmarConexionDuplicada"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
             android:name=".VerConexiones"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

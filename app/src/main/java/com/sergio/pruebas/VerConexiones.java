@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.sergio.pruebas.adaptadores.AdaptadorMostrarConexiones;
 import com.sergio.pruebas.adaptadores.AdaptadorNuevaConexion;
 import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.memoria.GestionArchivos;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,21 +44,14 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         try {
-            SharedPreferences $$listado = getSharedPreferences("$$listado", MODE_PRIVATE);
-            listado = $$listado.getString("$jList", "");
+            SharedPreferences sp = getSharedPreferences("$$listado", MODE_PRIVATE);
+            listado = sp.getString("$jList", "");
             if(!listado.isEmpty()) {
-                JSONObject jo = new JSONObject(listado);
-                Toast.makeText(this,jo.toString(),Toast.LENGTH_LONG).show();
-                ArrayList<Conexion> listadoConexiones = new ArrayList();
-                JSONArray jArray = jo.getJSONArray("conexionList");
-                for (int i = 0; i < jArray.length(); i++) {
-                    listadoConexiones.add((Conexion) jArray.get(i));
-                }
-                lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.wifi_bar, listadoConexiones));
+                lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.wifi_bar, GestionArchivos.obtenerLista(sp,this)));
             }else {
                 Toast.makeText(this,R.string.error_sin_datos,Toast.LENGTH_LONG).show();
             }
-        } catch (JSONException e) {
+        } catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
         }
     }

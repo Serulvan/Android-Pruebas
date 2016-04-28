@@ -36,4 +36,24 @@
         android:layout_marginTop="120dp"
         android:checked="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="limpiar shared"
+        android:id="@+id/del"
+        android:layout_below="@+id/btngest"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ver shared"
+        android:id="@+id/ver"
+        android:layout_above="@+id/btngest"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp" />
+
 </RelativeLayout>

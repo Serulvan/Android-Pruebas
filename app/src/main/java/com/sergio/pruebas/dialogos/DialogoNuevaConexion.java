@@ -14,15 +14,11 @@ import android.widget.Toast;
 import com.sergio.pruebas.R;
 import com.sergio.pruebas.conexiones.Conexion;
 import com.sergio.pruebas.hilos.GestorHilos;
+import com.sergio.pruebas.memoria.GestionArchivos;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class DialogoNuevaConexion extends Activity implements View.OnClickListener{
 
@@ -65,34 +61,45 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
                 i.putExtra("pass", pass.getText().toString().trim());
                 startActivity(i);
             }else{
+                String ssID = ssid.getText().toString().trim();
                 try {
-                    Conexion c = new Conexion(ssid.getText().toString().trim(),pass.getText().toString().trim());
-                    SharedPreferences $$listado = getSharedPreferences("$$listado", MODE_PRIVATE);
-                    String listado = $$listado.getString("$jList", "");
-                    ArrayList<Conexion> listadoConexiones = new ArrayList();
-                    JSONArray jArray;
-                    JSONObject jo;
-                    if (!listado.isEmpty()) {
-                        jo = new JSONObject(listado);
-                        jArray = jo.getJSONArray("conexionList");
-                        for (int i = 0; i < jArray.length(); i++) {
-                            listadoConexiones.add((Conexion)jArray.get(i));
-                        }
+                    if (GestionArchivos.buscarRed(ssID, getSharedPreferences("$$listado", MODE_PRIVATE),this)){
+                        Intent i = new Intent(this, DialogoConfirmarConexionDuplicada.class);
+                        i.putExtra("ssid", ssID);
+                        startActivityForResult(i, 1);
+                    }else{
+                        add();
                     }
-                    listadoConexiones.add(c);
-                    Collections.sort(listadoConexiones, new Conexion());
-                    jArray = new JSONArray(listadoConexiones);
-                    SharedPreferences.Editor ed = $$listado.edit();
-                    jo = new JSONObject();
-                    jo.put("conexionList",jArray);
-                    Toast.makeText(this,jo.toString(),Toast.LENGTH_LONG).show();
-                    ed.putString("$jList",jo.toString());
-                    ed.commit();
-                } catch (JSONException e) {
+                } catch (JSONException | UnknownHostException e) {
                     e.printStackTrace();
                 }
                 finish();
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                add();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }
+
+    private void add(){
+        try {
+            Conexion c = new Conexion(ssid.getText().toString().trim()
+                    ,pass.getText().toString().trim());
+            SharedPreferences sp = getSharedPreferences("$$listado", MODE_PRIVATE);
+            GestionArchivos.añadirRed(c, sp, this);
+            Toast.makeText(this,R.string.exito_red_añadida,Toast.LENGTH_LONG).show();
+        }
+        catch (JSONException | UnknownHostException e) {
+            e.printStackTrace();
         }
     }
 }
