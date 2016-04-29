@@ -1,5 +1,6 @@
 package com.sergio.pruebas;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.sergio.pruebas.adaptadores.AdaptadorMostrarConexiones;
 import com.sergio.pruebas.adaptadores.AdaptadorNuevaConexion;
 import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.dialogos.DialogoEditarBorrar;
 import com.sergio.pruebas.memoria.GestionArchivos;
 
 import org.json.JSONArray;
@@ -64,6 +66,6 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        startActivity(new Intent(this,DialogoEditarBorrar.class));
     }
 }

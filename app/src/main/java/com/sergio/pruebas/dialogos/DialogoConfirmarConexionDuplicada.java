@@ -24,7 +24,7 @@ public class DialogoConfirmarConexionDuplicada extends Activity implements View.
         acep = (Button)findViewById(R.id.dccd_btn_aceptar);
         canc = (Button)findViewById(R.id.dccd_btn_cancel);
         mensaje = (TextView)findViewById(R.id.dccd_tv);
-        String text = getIntent().getStringExtra("ssid")+R.string.alerta_red_existente;
+        String text = getIntent().getStringExtra("ssid")+ " " +getResources().getString(R.string.alerta_red_existente);
         mensaje.setText(text);
         acep.setOnClickListener(this);
     }

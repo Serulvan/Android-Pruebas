@@ -2,6 +2,8 @@ package com.sergio.pruebas;
 
 import android.net.wifi.WifiConfiguration;
 
+import com.sergio.pruebas.conexiones.Conexion;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -9,7 +11,9 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 
 public class MyConfig {
-    //ip auto o manual
+    //http://stackoverflow.com/questions/25141229/change-internet-proxy-wifi-3g-gprs-in-android-2-2-an-upper-from-code
+
+    //ip auto o manual: "STATIC" o "DHCP"
     public static void setIpAssignment(String assign , WifiConfiguration wifiConf)
             throws SecurityException, IllegalArgumentException, NoSuchFieldException, IllegalAccessException{
         setEnumField(wifiConf, assign, "ipAssignment");

@@ -4,14 +4,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Comparator;
 
 public class Conexion implements Comparator {
     private String ssid,pass;
     private InetAddress ip,masc,puerta;
     private boolean auto;
+    private int id;
 
     public Conexion() {
+        //solo se usa para ordenar con el sort
+    }
+
+    public Conexion(JSONObject jo) throws JSONException, UnknownHostException {
+        ssid = jo.getString("ssid");
+        pass = jo.getString("pass");
+        auto = jo.getBoolean("auto");
+        id = jo.getInt("id");
+        if (jo.has("ip")) {
+            auto=false;
+            ip = InetAddress.getByName(jo.getString("ip"));
+            masc = InetAddress.getByName(jo.getString("masc"));
+            puerta = InetAddress.getByName(jo.getString("puerta"));
+        } else auto=true;
     }
 
     public Conexion(String ssid, String pass) {
@@ -27,6 +43,14 @@ public class Conexion implements Comparator {
         this.masc = masc;
         this.puerta = puerta;
         auto=false;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSsid() {
@@ -69,8 +93,29 @@ public class Conexion implements Comparator {
         this.puerta = puerta;
     }
 
+    public String getDHCP(){
+        if (auto) {
+            return "STATIC";
+        }
+        else {
+            return "DHCP";
+        }
+    }
+
+    public int getPrefijoRed(){
+        String sa[] = masc.getHostAddress().split("\\.");
+        String s = Integer.toBinaryString(Integer.parseInt(sa[0]))+
+                Integer.toBinaryString(Integer.parseInt(sa[1]))+
+                Integer.toBinaryString(Integer.parseInt(sa[2]))+
+                Integer.toBinaryString(Integer.parseInt(sa[3]))+'0';
+        int i=0;
+        while (s.charAt(i++)=='1'&&i<s.length());
+        return --i;
+    }
+
     @Override
     public int compare(Object lhs, Object rhs) {
+        //ordenar por ssid
         return ((Conexion)lhs).getSsid().compareTo(((Conexion) rhs).getSsid());
     }
 
@@ -79,6 +124,7 @@ public class Conexion implements Comparator {
         jo.put("ssid",ssid);
         jo.put("pass",pass);
         jo.put("auto",auto);
+        jo.put("id",id);
         if (!auto) {
             jo.put("ip", ip.getHostAddress());
             jo.put("masc", masc.getHostAddress());

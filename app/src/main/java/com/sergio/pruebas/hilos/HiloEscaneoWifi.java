@@ -7,9 +7,13 @@ import android.widget.ListView;
 
 import com.sergio.pruebas.R;
 import com.sergio.pruebas.adaptadores.AdaptadorNuevaConexion;
+import com.sergio.pruebas.odenadores.OrdenarWifiScanPorLevel;
+
+import java.util.Collections;
+import java.util.List;
 
 
-public class HiloEscaneoWifi extends AsyncTask<Void,Void,Void> {
+public class HiloEscaneoWifi extends AsyncTask<Void,Integer,Void> {
 
     private ListView lv;
     private WifiManager wm;
@@ -24,12 +28,20 @@ public class HiloEscaneoWifi extends AsyncTask<Void,Void,Void> {
     }
 
     @Override
-    protected void onProgressUpdate(Void... values) {
+    protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        if (wm.isWifiEnabled()) {
-            wm.startScan();
+        switch (values[0]) {
+            case 0:
+            if (wm.isWifiEnabled()) {
+                wm.startScan();
+            }
+                break;
+            case 1:
+                List scanResults = wm.getScanResults();
+                Collections.sort(scanResults, new OrdenarWifiScanPorLevel());
+                lv.setAdapter(new AdaptadorNuevaConexion(activity, R.layout.wifi_bar, scanResults));
+                break;
         }
-        lv.setAdapter(new AdaptadorNuevaConexion(activity, R.layout.wifi_bar, wm.getScanResults()));
     }
 
     @Override
@@ -40,10 +52,12 @@ public class HiloEscaneoWifi extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... params) {
         while (activo) {
-            if (!pausa) {
-                publishProgress();
-            }
             try {
+                if (!pausa) {
+                    publishProgress(0);
+                    Thread.sleep(1000);
+                    publishProgress(1);
+                }
                 Thread.sleep(1000*5);
             } catch (InterruptedException e) {
                 e.printStackTrace();

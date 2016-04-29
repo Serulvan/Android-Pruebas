@@ -27,6 +27,9 @@
             android:name=".NuevaConexion"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".VerConexiones"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".dialogos.DialogoNuevaConexion"
             android:theme="@android:style/Theme.Dialog" />
         <activity
@@ -36,9 +39,9 @@
             android:name=".dialogos.DialogoConfirmarConexionDuplicada"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".VerConexiones"
-            android:screenOrientation="portrait" />
-
+            android:name=".dialogos.DialogoEditarBorrar"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".test"></activity>
     </application>
 
 </manifest>

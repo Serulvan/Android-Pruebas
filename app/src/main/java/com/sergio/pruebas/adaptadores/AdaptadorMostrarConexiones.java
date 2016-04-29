@@ -12,9 +12,6 @@ import com.sergio.pruebas.conexiones.Conexion;
 
 import java.util.ArrayList;
 
-/**
- * Created by Serulvan on 28/04/2016.
- */
 public class AdaptadorMostrarConexiones extends ArrayAdapter {
     private Context c;
     private ArrayList<Conexion> arr;
@@ -37,25 +34,12 @@ public class AdaptadorMostrarConexiones extends ArrayAdapter {
         }
         TextView ssid = (TextView)item.findViewById(R.id.ssid_list);
         ssid.setText(arr.get(position).getSsid());
-        if (!arr.get(position).getPass().isEmpty()) {
-            TextView datos1 = (TextView) item.findViewById(R.id.datos1);
-            datos1.setText(arr.get(position).getPass());
-        }/*
-        TextView datos2 = (TextView)item.findViewById(R.id.datos2);
+        ssid.setTag(String.valueOf(arr.get(position).getId()));
 
-        //50/3=16,6666666 => 17
-        int nSe;
-        if (arr.get(position).level>-50){
-            nSe=4;
-        }else if (arr.get(position).level>-67){
-            nSe=3;
-        }else if (arr.get(position).level>-84){
-            nSe=2;
-        }else{
-            nSe=1;
-        }
-        datos2.setText(String.valueOf(arr.get(position).level));
-        datos2.setVisibility(View.VISIBLE);*/
+        TextView datos1 = (TextView) item.findViewById(R.id.datos1);
+        if (!arr.get(position).getPass().isEmpty()) {
+            datos1.setText(arr.get(position).getPass());
+        }else datos1.setVisibility(View.INVISIBLE);
 
         return item;
     }

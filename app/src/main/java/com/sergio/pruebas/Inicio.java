@@ -37,9 +37,8 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
             startActivity(i);
         }else if(v.getId()==del.getId()){
             getSharedPreferences("$$listado",MODE_PRIVATE).edit().clear().commit();
-            Toast.makeText(this, getSharedPreferences("$$listado", MODE_PRIVATE).getString("$jList", ""), Toast.LENGTH_SHORT).show();
         }else if(v.getId()==ver.getId()){
-            Toast.makeText(this, getSharedPreferences("$$listado", MODE_PRIVATE).getString("$jList", ""), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getSharedPreferences("$$listado", MODE_PRIVATE).getString("$jList", ""), Toast.LENGTH_LONG).show();
         }
     }
 }

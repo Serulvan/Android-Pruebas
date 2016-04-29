@@ -23,4 +23,6 @@
     <string name="exito_red_añadida">Red añadida con éxito</string>
 
     <string name="alerta_red_existente"> ya está guardada,\nsi continua podrian duplicarse los datos.\n¿Desea continuar?</string>
+    <string name="deb_editar">EDITAR</string>
+    <string name="deb_borrar">BORRAR</string>
 </resources>
