@@ -1,9 +1,13 @@
 package com.sergio.pruebas;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -72,7 +76,54 @@ public class test extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        WifiManager wm = (WifiManager) getSystemService(this.WIFI_SERVICE);
+        /*NotificationCompat.Builder ncb = new NotificationCompat.Builder(this);
+        ncb.setSmallIcon(R.mipmap.ic_launcher);
+        ncb.setContentTitle("My notification");
+        ncb.setContentText("Hello World!");
+        ncb.setTicker("haaaaaaaaa");
+        NotificationManager nm;
+        nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        int id = 001;
+        nm.notify(id,ncb.build());*/
+        Log.i("Start", "notification");
+
+   /* Invoking the default notification service */
+        NotificationCompat.Builder  mBuilder = new NotificationCompat.Builder(this);
+
+        mBuilder.setContentTitle("New Message");
+        mBuilder.setContentText("You've received new message.");
+        mBuilder.setTicker("New Message Alert!");
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+
+   /* Increase notification number every time a new notification arrives */
+        mBuilder.setNumber(0);
+
+   /* Add Big View Specific Configuration */
+        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+
+        String[] events = new String[6];
+        events[0] = new String("This is first line....");
+        events[1] = new String("This is second line...");
+        events[2] = new String("This is third line...");
+        events[3] = new String("This is 4th line...");
+        events[4] = new String("This is 5th line...");
+        events[5] = new String("This is 6th line...");
+
+        // Sets a title for the Inbox style big view
+        inboxStyle.setBigContentTitle("Big Title Details:");
+
+        // Moves events into the big view
+        for (int i=0; i < events.length; i++) {
+            inboxStyle.addLine(events[i]);
+        }
+
+        mBuilder.setStyle(inboxStyle);
+
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+   /* notificationID allows you to update the notification later on. */
+        mNotificationManager.notify(1, mBuilder.build());
+        /*WifiManager wm = (WifiManager) getSystemService(this.WIFI_SERVICE);
         WifiConfiguration wc = null;
         List<WifiConfiguration> cn = wm.getConfiguredNetworks();
         wc = cn.get(0);
@@ -114,9 +165,9 @@ public class test extends AppCompatActivity implements View.OnClickListener {
             }
         }
 
-        IpCon
+
         wm.updateNetwork(wc); // apply the setting
         wm.saveConfiguration(); // Save it
-
+*/
     }
 }
