@@ -63,7 +63,7 @@ public class MyConfig {
 
     public static Object getField(Object obj, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException{
-        Field f = obj.getClass().getField(name);
+        Field f = obj.getClass().getDeclaredField(name);
         Object out = f.get(obj);
         return out;
     }
@@ -79,7 +79,7 @@ public class MyConfig {
 
     public static void setEnumField(Object obj, String value, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException{
-        Field f = obj.getClass().getField(name);
+        Field f = obj.getClass().getDeclaredField(name);
         f.set(obj, Enum.valueOf((Class<Enum>) f.getType(), value));
     }
 }

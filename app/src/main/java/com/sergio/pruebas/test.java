@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sergio.pruebas.conexiones.Conexion;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class test extends AppCompatActivity implements View.OnClickListener {
 
@@ -71,7 +73,9 @@ public class test extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         WifiManager wm = (WifiManager) getSystemService(this.WIFI_SERVICE);
-        WifiConfiguration wc = new WifiConfiguration();
+        WifiConfiguration wc = null;
+        List<WifiConfiguration> cn = wm.getConfiguredNetworks();
+        wc = cn.get(0);
         if (v.getId() == btser.getId()) {
             try {
                 MyConfig.setIpAssignment(c1.getDHCP(),wc);
@@ -109,7 +113,10 @@ public class test extends AppCompatActivity implements View.OnClickListener {
                 e.printStackTrace();
             }
         }
+
+        IpCon
         wm.updateNetwork(wc); // apply the setting
         wm.saveConfiguration(); // Save it
+
     }
 }
