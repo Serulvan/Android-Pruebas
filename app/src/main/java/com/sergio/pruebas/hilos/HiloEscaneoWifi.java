@@ -30,17 +30,17 @@ public class HiloEscaneoWifi extends AsyncTask<Void,Integer,Void> {
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        switch (values[0]) {
-            case 0:
-            if (wm.isWifiEnabled()) {
-                wm.startScan();
+        if (wm.isWifiEnabled()) {
+            switch (values[0]) {
+                case 0:
+                    wm.startScan();
+                    break;
+                case 1:
+                    List scanResults = wm.getScanResults();
+                    Collections.sort(scanResults, new OrdenarWifiScanPorLevel());
+                    lv.setAdapter(new AdaptadorNuevaConexion(activity, R.layout.wifi_bar, scanResults));
+                    break;
             }
-                break;
-            case 1:
-                List scanResults = wm.getScanResults();
-                Collections.sort(scanResults, new OrdenarWifiScanPorLevel());
-                lv.setAdapter(new AdaptadorNuevaConexion(activity, R.layout.wifi_bar, scanResults));
-                break;
         }
     }
 
