@@ -1,6 +1,7 @@
 package com.sergio.pruebas.memoria;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
@@ -16,19 +17,23 @@ import java.util.Collections;
 
 public class GestionArchivos {
 
-    public static void añadirRed(Conexion c, SharedPreferences sp, Activity a) throws JSONException, UnknownHostException {
-        ArrayList<Conexion> arrLista = obtenerLista(sp, a);
+    public static SharedPreferences getSharedPreferencesListado(Context c){
+        return c.getSharedPreferences("$$listado", c.MODE_PRIVATE);
+    }
+
+    public static void añadirRed(Conexion c, SharedPreferences sp) throws JSONException, UnknownHostException {
+        ArrayList<Conexion> arrLista = obtenerLista(sp);
         int max = 0;
         for (int i = 0; i < arrLista.size(); i++) {
             if (max<arrLista.get(i).getId()) max = arrLista.get(i).getId();
         }
         c.setId(max+1);
         arrLista.add(c);
-        guardarLista(arrLista, sp, a);
+        guardarLista(arrLista, sp);
     }
 
-    public static boolean buscarRed(String ssid, SharedPreferences sp, Activity a) throws JSONException, UnknownHostException {
-        ArrayList<Conexion> arrLista = obtenerLista(sp, a);
+    public static boolean buscarRed(String ssid, SharedPreferences sp) throws JSONException, UnknownHostException {
+        ArrayList<Conexion> arrLista = obtenerLista(sp);
         for (int i=0; i<arrLista.size();i++ ){
             if (ssid.equals(arrLista.get(i).getSsid())){
                 return true;
@@ -37,7 +42,7 @@ public class GestionArchivos {
         return false;
     }
 
-    public static ArrayList<Conexion> obtenerLista(SharedPreferences sp, Activity a) throws JSONException, UnknownHostException {
+    public static ArrayList<Conexion> obtenerLista(SharedPreferences sp) throws JSONException, UnknownHostException {
         String listado = sp.getString("$jList", "");
         if (listado.isEmpty()) return new ArrayList<>();
         else {
@@ -51,7 +56,7 @@ public class GestionArchivos {
 
     }
 
-    private static void guardarLista(ArrayList<Conexion> arrLista, SharedPreferences sp, Activity a) throws JSONException {
+    private static void guardarLista(ArrayList<Conexion> arrLista, SharedPreferences sp) throws JSONException {
         SharedPreferences.Editor ed = sp.edit();
         Collections.sort(arrLista, new Conexion());
         JSONArray ja = new JSONArray();

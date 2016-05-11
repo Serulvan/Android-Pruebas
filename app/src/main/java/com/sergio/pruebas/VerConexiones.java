@@ -46,10 +46,10 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         try {
-            SharedPreferences sp = getSharedPreferences("$$listado", MODE_PRIVATE);
+            SharedPreferences sp = GestionArchivos.getSharedPreferencesListado(this);
             listado = sp.getString("$jList", "");
             if(!listado.isEmpty()) {
-                lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.wifi_bar, GestionArchivos.obtenerLista(sp,this)));
+                lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.wifi_bar, GestionArchivos.obtenerLista(sp)));
             }else {
                 Toast.makeText(this,R.string.error_sin_datos,Toast.LENGTH_LONG).show();
             }

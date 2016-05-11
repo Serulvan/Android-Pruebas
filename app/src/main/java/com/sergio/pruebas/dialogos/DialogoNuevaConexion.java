@@ -63,7 +63,7 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
             }else{
                 String ssID = ssid.getText().toString().trim();
                 try {
-                    if (GestionArchivos.buscarRed(ssID, getSharedPreferences("$$listado", MODE_PRIVATE),this)){
+                    if (GestionArchivos.buscarRed(ssID, GestionArchivos.getSharedPreferencesListado(this))){
                         Intent i = new Intent(this, DialogoConfirmarConexionDuplicada.class);
                         i.putExtra("ssid", ssID);
                         startActivityForResult(i, 1);
@@ -94,8 +94,7 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
         try {
             Conexion c = new Conexion(ssid.getText().toString().trim()
                     ,pass.getText().toString().trim());
-            SharedPreferences sp = getSharedPreferences("$$listado", MODE_PRIVATE);
-            GestionArchivos.añadirRed(c, sp, this);
+            GestionArchivos.añadirRed(c, GestionArchivos.getSharedPreferencesListado(this));
             Toast.makeText(this,R.string.exito_red_añadida,Toast.LENGTH_LONG).show();
         }
         catch (JSONException | UnknownHostException e) {

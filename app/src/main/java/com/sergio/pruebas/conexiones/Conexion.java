@@ -12,6 +12,7 @@ public class Conexion implements Comparator {
     private InetAddress ip,masc,puerta;
     private boolean auto;
     private int id;
+    private static int currentMaxId=-1;
 
     public Conexion() {
         //solo se usa para ordenar con el sort
@@ -22,6 +23,9 @@ public class Conexion implements Comparator {
         pass = jo.getString("pass");
         auto = jo.getBoolean("auto");
         id = jo.getInt("id");
+        if (currentMaxId<0){
+            currentMaxId=jo.getInt("currentMaxId");
+        }
         if (jo.has("ip")) {
             auto=false;
             ip = InetAddress.getByName(jo.getString("ip"));
@@ -34,6 +38,7 @@ public class Conexion implements Comparator {
         this.ssid = ssid;
         this.pass = pass;
         auto=true;
+        id=getCurrentMaxId();
     }
 
     public Conexion(String ssid, String pass, InetAddress ip, InetAddress masc, InetAddress puerta) {
@@ -43,6 +48,7 @@ public class Conexion implements Comparator {
         this.masc = masc;
         this.puerta = puerta;
         auto=false;
+        id=getCurrentMaxId();
     }
 
     public int getId() {
@@ -93,12 +99,24 @@ public class Conexion implements Comparator {
         this.puerta = puerta;
     }
 
-    public String getDHCP(){
+    public String getSDHCP(){
         if (auto) {
-            return "STATIC";
+            return "DHCP";
         }
         else {
-            return "DHCP";
+            return "STATIC";
+        }
+    }
+
+    public boolean getDHCP(){
+        return auto;
+    }
+
+    public int getIDHCP(){
+        if (auto){
+            return 1;
+        }else {
+            return 0;
         }
     }
 
@@ -125,11 +143,16 @@ public class Conexion implements Comparator {
         jo.put("pass",pass);
         jo.put("auto",auto);
         jo.put("id",id);
+        jo.put("currentMaxId",currentMaxId);
         if (!auto) {
             jo.put("ip", ip.getHostAddress());
             jo.put("masc", masc.getHostAddress());
             jo.put("puerta", puerta.getHostAddress());
         }
         return jo;
+    }
+
+    private int getCurrentMaxId(){
+        return ++currentMaxId;
     }
 }
