@@ -25,4 +25,6 @@
     <string name="alerta_red_existente"> ya está guardada,\nsi continua podrian duplicarse los datos.\n¿Desea continuar?</string>
     <string name="deb_editar">EDITAR</string>
     <string name="deb_borrar">BORRAR</string>
+    <string name="servicio_start">Servicio iniciado</string>
+    <string name="servicio_stop">Servicio detenido</string>
 </resources>
