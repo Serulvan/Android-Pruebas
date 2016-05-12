@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GestionArchivos {
+public abstract class GestionArchivos {
 
     public static SharedPreferences getSharedPreferencesListado(Context c){
         return c.getSharedPreferences("$$listado", c.MODE_PRIVATE);

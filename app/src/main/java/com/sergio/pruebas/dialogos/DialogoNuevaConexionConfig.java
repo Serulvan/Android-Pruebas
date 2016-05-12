@@ -116,7 +116,7 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
             finish();
         } else if (v.getId()==continuar.getId()){
             try {
-                if (GestionArchivos.buscarRed(ssid, getSharedPreferences("$$listado", MODE_PRIVATE),this)){
+                if (GestionArchivos.buscarRed(ssid, GestionArchivos.getSharedPreferencesListado(this))){
                         Intent i = new Intent(this, DialogoConfirmarConexionDuplicada.class);
                         i.putExtra("ssid", ssid);
                         startActivityForResult(i, 1);
@@ -149,7 +149,7 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
                     InetAddress.getByName(mascara.getText().toString()),
                     InetAddress.getByName(puerta.getText().toString()));
             SharedPreferences sp = getSharedPreferences("$$listado", MODE_PRIVATE);
-            GestionArchivos.añadirRed(c, sp, this);
+            GestionArchivos.añadirRed(c, sp);
             Toast.makeText(this,R.string.exito_red_añadida,Toast.LENGTH_LONG).show();
         }
         catch (JSONException | UnknownHostException e) {

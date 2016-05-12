@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.sergio.pruebas.dialogos.DialogoNuevaConexion;
@@ -49,14 +50,16 @@ public class NuevaConexion extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        //cerrar Hilo
+        //pausar Hilo
         GestorHilos.pausarHiloEscaneoWifi();
-        startActivity(new Intent(this, DialogoNuevaConexion.class));
+        Intent i = new Intent(this, DialogoNuevaConexion.class);
+        i.putExtra("pass", "$");
+        startActivity(i);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //cerrar Hilo
+        //pausar Hilo
         GestorHilos.pausarHiloEscaneoWifi();
 
         Intent i = new Intent(this, DialogoNuevaConexion.class);
@@ -64,11 +67,7 @@ public class NuevaConexion extends AppCompatActivity implements View.OnClickList
         i.putExtra("ssid", tv.getText().toString());
 
         tv=(TextView)view.findViewById(R.id.datos1);
-        if(tv.getText().toString().length()==0){
-            i.putExtra("pass",0);
-        }else{
-            i.putExtra("pass",1);
-        }
+        i.putExtra("pass",tv.getText().toString());
         startActivity(i);
     }
 }

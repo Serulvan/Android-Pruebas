@@ -5,7 +5,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
@@ -26,6 +29,7 @@ import java.util.List;
 public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     private Context context;
     private Boolean activo = true;
+    private int i = 0;
 
     public HiloCompruebaEstado(Context context, Boolean activo) {
         this.context = context;
@@ -95,11 +99,34 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         return z;
     }
 
-    private void changeConection(Conexion c){
+    private void changeConection(Conexion c, WifiManager wm){
         //get conection 0 or create new;
+        List<WifiConfiguration> lcn=wm.getConfiguredNetworks();
+        WifiConfiguration wc;
+        if (lcn.size()>0){
+            wc = lcn.get(0);
+        } else{
+            wc = new WifiConfiguration();
+        }
         //set SSID;
+        wc.SSID="\""+c.getSsid()+"\"";
         //set pass;
-
+        if ("wep".equals("wep")) {
+            wc.wepKeys[0] = "\"" + c.getPass() + "\"";
+            wc.wepTxKeyIndex = 0;
+            wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+        }else if("wpa".equals("wpa")){
+            wc.preSharedKey = "\""+ c.getPass() +"\"";
+        }else{
+            wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+        }
+        //remove all connections  and add the new connection
+        for( WifiConfiguration i : lcn ) {
+            wm.removeNetwork(i.networkId);
+            wm.saveConfiguration();
+        }
+        int netId = wm.addNetwork(wc);
         //Set to 1 for true and 0 for false.
         android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_USE_STATIC_IP, String.valueOf(c.getIDHCP()));
         if (!c.getDHCP()){
@@ -107,25 +134,29 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
             android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_NETMASK, c.getMasc().getHostAddress());
             android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_IP, c.getIp().getHostAddress());
         }
-
+        wm.disconnect();
+        wm.enableNetwork(netId, true);
+        wm.reconnect();
+        notificación(c);
     }
 
-    private void notificación(){
+    private void notificación(Conexion c){
         NotificationCompat.Builder ncb = new NotificationCompat.Builder(context);
         ncb.setSmallIcon(R.mipmap.ic_launcher);
-        ncb.setContentTitle("conectado a SSID");
-        ncb.setContentText("esto es una prueba");
+        ncb.setContentTitle("notificacion_titulo");
+        ncb.setContentText("notificacion_cuerpo" + c.getSsid());
         ncb.setAutoCancel(true);
         long[] pat = {0,200,200};
         ncb.setVibrate(pat);
         //Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.blast_small);
-        //ncb.setSound(sound);
+        Uri sound= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        ncb.setSound(sound);
         ncb.setNumber(1);
         //Intent intent = new Intent(context, Inicio.class);
         PendingIntent rpi = PendingIntent.getActivity(context, 0, /*intent*/new Intent(), 0);
         ncb.setContentIntent(rpi);
 
-        int mNotificationId = 0;
+        int mNotificationId = i++;
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyMgr.notify(mNotificationId, ncb.build());
     }

@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.sergio.pruebas.R;
@@ -20,11 +23,13 @@ import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
-public class DialogoNuevaConexion extends Activity implements View.OnClickListener{
+public class DialogoNuevaConexion extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private EditText ssid, pass;
     private Button btnCancel, btnContin;
     private CheckBox cbAvanzado;
+    private LinearLayout spll;
+    private Spinner spn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +39,24 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
         ssid=(EditText)findViewById(R.id.dnc_ssid);
         pass=(EditText)findViewById(R.id.dnc_pass);
         ssid.setText(getIntent().getStringExtra("ssid"));
-        if (getIntent().getIntExtra("pass",10)==0){
+        spll=(LinearLayout)findViewById(R.id.dnc_ll_spl);
+        spn = (Spinner)findViewById(R.id.dnc_spn_seguridad);
+        spn.setOnItemSelectedListener(this);
+        String typePass = getIntent().getStringExtra("pass");
+        if (typePass.length()==0){
             pass.setVisibility(View.GONE);
+            spll.setVisibility(View.GONE);
+        }else if(typePass.equals("$")){
+                spn.setSelection(0);
+                pass.setVisibility(View.GONE);
+        } else if(typePass.toUpperCase().contains("WEP")){
+            spn.setSelection(1);
+        } else if(typePass.toUpperCase().contains("WPA")){
+            spn.setSelection(2);
+        } else {
+            spn.setSelection(3);
         }
+
         btnContin = (Button)findViewById(R.id.dnc_btncontinuar);
         btnCancel = (Button)findViewById(R.id.dnc_btncancelar);
 
@@ -100,5 +120,27 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
         catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position){
+            case 0:
+                pass.setVisibility(View.GONE);
+                break;
+            case 1:
+                pass.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                pass.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                pass.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

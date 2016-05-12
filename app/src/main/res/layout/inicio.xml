@@ -34,7 +34,7 @@
         android:layout_below="@+id/btngest"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
-        android:checked="true" />
+        android:checked="false" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 import com.sergio.pruebas.hilos.HiloEscaneoWifi;
 
-public class GestorHilos {
+public abstract class GestorHilos {
     private static HiloEscaneoWifi hew;
 
     public static void declararHiloEscaneoWifi(ListView lv,WifiManager wm, Activity activity){

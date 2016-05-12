@@ -14,6 +14,8 @@
     <string name="dncc_mascara">Máscara de subred</string>
     <string name="dncc_puertaenlace">Puerta de enlace</string>
     <string name="conexiones_atras">ATRAS</string>
+    <string name="deb_editar">EDITAR</string>
+    <string name="deb_borrar">BORRAR</string>
 
     <string name="error_ssid_vacio">El campo "SSID" no puede estar vacio.</string>
     <string name="error_ip_ipnovalida">Introduce una IP válida.</string>
@@ -23,8 +25,17 @@
     <string name="exito_red_añadida">Red añadida con éxito</string>
 
     <string name="alerta_red_existente"> ya está guardada,\nsi continua podrian duplicarse los datos.\n¿Desea continuar?</string>
-    <string name="deb_editar">EDITAR</string>
-    <string name="deb_borrar">BORRAR</string>
+
     <string name="servicio_start">Servicio iniciado</string>
     <string name="servicio_stop">Servicio detenido</string>
+    <string name="notificacion_titulo">Reconexión</string>
+    <string name="notificacion_cuerpo">conectado a </string>
+    <string name="pass_seguridad">SEGURIDAD</string>
+
+    <array name="passType">
+        <item>Abierta</item>
+        <item>WEP</item>
+        <item>WPA/WPA2 PSK</item>
+        <item>experi mental</item>
+    </array>
 </resources>
