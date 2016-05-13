@@ -112,8 +112,9 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
 
     private void add(){
         try {
-            Conexion c = new Conexion(ssid.getText().toString().trim()
-                    ,pass.getText().toString().trim());
+            Conexion c = new Conexion(ssid.getText().toString().trim(),
+                    pass.getText().toString().trim(),
+                    getResources().getStringArray(R.array.passType)[spn.getSelectedItemPosition()]);
             GestionArchivos.añadirRed(c, GestionArchivos.getSharedPreferencesListado(this));
             Toast.makeText(this,R.string.exito_red_añadida,Toast.LENGTH_LONG).show();
         }

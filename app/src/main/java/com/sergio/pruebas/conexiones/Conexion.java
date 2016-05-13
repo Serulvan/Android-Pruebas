@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 import java.util.Comparator;
 
 public class Conexion implements Comparator {
-    private String ssid,pass;
+    private String ssid,pass, cifrado;
     private InetAddress ip,masc,puerta;
     private boolean auto;
     private int id;
@@ -20,7 +20,10 @@ public class Conexion implements Comparator {
 
     public Conexion(JSONObject jo) throws JSONException, UnknownHostException {
         ssid = jo.getString("ssid");
-        pass = jo.getString("pass");
+        cifrado=jo.getString("cifrado");
+        if (!cifrado.equals("abierto")){
+            pass = jo.getString("pass");
+        }
         auto = jo.getBoolean("auto");
         id = jo.getInt("id");
         if (currentMaxId<0){
@@ -34,16 +37,22 @@ public class Conexion implements Comparator {
         } else auto=true;
     }
 
-    public Conexion(String ssid, String pass) {
+    public Conexion(String ssid, String pass, String cifrado) {
         this.ssid = ssid;
-        this.pass = pass;
+        this.cifrado = cifrado;
+        if (!cifrado.equals("abierto")) {
+            this.pass = pass;
+        }
         auto=true;
         id=getCurrentMaxId();
     }
 
-    public Conexion(String ssid, String pass, InetAddress ip, InetAddress masc, InetAddress puerta) {
+    public Conexion(String ssid, String pass, String cifrado, InetAddress ip, InetAddress masc, InetAddress puerta) {
         this.ssid = ssid;
-        this.pass = pass;
+        this.cifrado = cifrado;
+        if (!cifrado.equals("abierto")) {
+            this.pass = pass;
+        }
         this.ip = ip;
         this.masc = masc;
         this.puerta = puerta;
@@ -73,6 +82,14 @@ public class Conexion implements Comparator {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getCifrado() {
+        return cifrado;
+    }
+
+    public void setCifrado(String cifrado) {
+        this.cifrado = cifrado;
     }
 
     public InetAddress getIp() {
@@ -140,7 +157,10 @@ public class Conexion implements Comparator {
     public JSONObject toJsonObject() throws JSONException {
         JSONObject jo = new JSONObject();
         jo.put("ssid",ssid);
-        jo.put("pass",pass);
+        jo.put("cifrado",cifrado);
+        if (!cifrado.equals("abierto")){
+            jo.put("pass",pass);
+        }
         jo.put("auto",auto);
         jo.put("id",id);
         jo.put("currentMaxId",currentMaxId);

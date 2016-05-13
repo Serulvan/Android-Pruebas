@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat;
 import com.sergio.pruebas.R;
 import com.sergio.pruebas.conexiones.Conexion;
 import com.sergio.pruebas.memoria.GestionArchivos;
+import com.sergio.pruebas.memoria.GestionPreferencias;
 import com.sergio.pruebas.odenadores.OrdenarWifiScanPorLevel;
 
 import org.json.JSONException;
@@ -40,10 +41,10 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... params) {
         while (activo) {
             try {
-                Thread.sleep(1000 * 60 * 5);
                 if (activo) {
                     publishProgress();
                 }
+                Thread.sleep(1000 * 60 * 5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -111,12 +112,12 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         //set SSID;
         wc.SSID="\""+c.getSsid()+"\"";
         //set pass;
-        if ("wep".equals("wep")) {
+        if (c.getCifrado().toLowerCase().contains("wep")) {
             wc.wepKeys[0] = "\"" + c.getPass() + "\"";
             wc.wepTxKeyIndex = 0;
             wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        }else if("wpa".equals("wpa")){
+        }else if(c.getCifrado().toLowerCase().contains("wpa")){
             wc.preSharedKey = "\""+ c.getPass() +"\"";
         }else{
             wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
@@ -143,15 +144,19 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     private void notificación(Conexion c){
         NotificationCompat.Builder ncb = new NotificationCompat.Builder(context);
         ncb.setSmallIcon(R.mipmap.ic_launcher);
-        ncb.setContentTitle("notificacion_titulo");
-        ncb.setContentText("notificacion_cuerpo" + c.getSsid());
+        ncb.setContentTitle(context.getString(R.string.notificacion_titulo));
+        ncb.setContentText(context.getString(R.string.notificacion_cuerpo) + c.getSsid());
         ncb.setAutoCancel(true);
-        long[] pat = {0,200,200};
-        ncb.setVibrate(pat);
-        //Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.blast_small);
-        Uri sound= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        ncb.setSound(sound);
-        ncb.setNumber(1);
+        if (GestionPreferencias.getConfigNotifVibracion(GestionPreferencias.getSharedPreferencesConfig(context))) {
+            long[] pat = {0, 200, 200};
+            ncb.setVibrate(pat);
+        }
+        if (GestionPreferencias.getConfigNotifSonido(GestionPreferencias.getSharedPreferencesConfig(context))) {
+            //Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.blast_small);
+            Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            ncb.setSound(sound);
+        }
+        //ncb.setNumber(1);
         //Intent intent = new Intent(context, Inicio.class);
         PendingIntent rpi = PendingIntent.getActivity(context, 0, /*intent*/new Intent(), 0);
         ncb.setContentIntent(rpi);

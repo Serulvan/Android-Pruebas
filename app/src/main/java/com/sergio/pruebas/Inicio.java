@@ -56,8 +56,10 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, C
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
+            GestionPreferencias.setConfigServActivo(GestionPreferencias.getSharedPreferencesConfig(this),true);
             startService(new Intent(this,ServiceWifiManager.class));
         } else {
+            GestionPreferencias.setConfigServActivo(GestionPreferencias.getSharedPreferencesConfig(this),false);
             stopService(new Intent(this,ServiceWifiManager.class));
         }
 
