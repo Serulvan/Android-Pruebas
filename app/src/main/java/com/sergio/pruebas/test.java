@@ -53,7 +53,7 @@ public class test extends AppCompatActivity implements View.OnClickListener {
         puerta = puerta1.getText().toString();
 
         try {
-            c1 = new Conexion(ssid,pass, InetAddress.getByName(ip),InetAddress.getByName(masc),InetAddress.getByName(puerta));
+            c1 = new Conexion(ssid,pass,"wpa", InetAddress.getByName(ip),InetAddress.getByName(masc),InetAddress.getByName(puerta));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -65,7 +65,7 @@ public class test extends AppCompatActivity implements View.OnClickListener {
         puerta = puerta2.getText().toString();
 
         try {
-            c2 = new Conexion(ssid,pass, InetAddress.getByName(ip),InetAddress.getByName(masc),InetAddress.getByName(puerta));
+            c2 = new Conexion(ssid,pass,"wep", InetAddress.getByName(ip),InetAddress.getByName(masc),InetAddress.getByName(puerta));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

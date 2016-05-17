@@ -32,6 +32,8 @@
     <string name="notificacion_cuerpo">Conectado a </string>
     <string name="pass_seguridad">SEGURIDAD</string>
 
+    <string name="error_campos_vacios">Rellena todos los campos.</string>
+
     <array name="passType">
         <item>Abierta</item>
         <item>WEP</item>

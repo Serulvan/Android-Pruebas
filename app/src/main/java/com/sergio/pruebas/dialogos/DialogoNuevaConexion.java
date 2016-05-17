@@ -70,8 +70,7 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if(v.getId()==btnCancel.getId()){
-            GestorHilos.reanudarHiloEscaneoWifi();
-            finish();
+            cerrarDNC();
         }else{
             if(ssid.getText().toString().trim().length()==0){
                 Toast.makeText(this,R.string.error_ssid_vacio,Toast.LENGTH_SHORT).show();
@@ -79,7 +78,8 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
                 Intent i = new Intent(this, DialogoNuevaConexionConfig.class);
                 i.putExtra("ssid", ssid.getText().toString().trim());
                 i.putExtra("pass", pass.getText().toString().trim());
-                startActivity(i);
+                i.putExtra("segur",getResources().getStringArray(R.array.passType)[spn.getSelectedItemPosition()]);
+                startActivityForResult(i, 0);
             }else{
                 String ssID = ssid.getText().toString().trim();
                 try {
@@ -89,25 +89,33 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
                         startActivityForResult(i, 1);
                     }else{
                         add();
+                        cerrarDNC();
                     }
                 } catch (JSONException | UnknownHostException e) {
                     e.printStackTrace();
                 }
-                finish();
+
             }
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
+        if (requestCode == 0){
+            //dialogoNuevaConexionCongfig
+            if(resultCode == Activity.RESULT_OK){
+                cerrarDNC();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+            }
+        }else if (requestCode == 1) {
+            //dialogoConfirmarConexionDuplicada
             if(resultCode == Activity.RESULT_OK){
                 add();
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-
+                cerrarDNC();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
             }
         }
+
     }
 
     private void add(){
@@ -116,7 +124,7 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
                     pass.getText().toString().trim(),
                     getResources().getStringArray(R.array.passType)[spn.getSelectedItemPosition()]);
             GestionArchivos.añadirRed(c, GestionArchivos.getSharedPreferencesListado(this));
-            Toast.makeText(this,R.string.exito_red_añadida,Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.exito_red_añadida,Toast.LENGTH_SHORT).show();
         }
         catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
@@ -143,5 +151,10 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void cerrarDNC(){
+        GestorHilos.reanudarHiloEscaneoWifi();
+        finish();
     }
 }

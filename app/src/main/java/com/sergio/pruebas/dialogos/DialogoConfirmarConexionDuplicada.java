@@ -27,6 +27,7 @@ public class DialogoConfirmarConexionDuplicada extends Activity implements View.
         String text = getIntent().getStringExtra("ssid")+ " " +getResources().getString(R.string.alerta_red_existente);
         mensaje.setText(text);
         acep.setOnClickListener(this);
+        canc.setOnClickListener(this);
     }
 
     @Override
