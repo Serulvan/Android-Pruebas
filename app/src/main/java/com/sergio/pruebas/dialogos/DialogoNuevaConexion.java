@@ -83,13 +83,18 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
             }else{
                 String ssID = ssid.getText().toString().trim();
                 try {
-                    if (GestionArchivos.buscarRed(ssID, GestionArchivos.getSharedPreferencesListado(this))){
-                        Intent i = new Intent(this, DialogoConfirmarConexionDuplicada.class);
-                        i.putExtra("ssid", ssID);
-                        startActivityForResult(i, 1);
-                    }else{
-                        add();
-                        cerrarDNC();
+                    if(pass.getText().toString().trim().length()>0||
+                            getResources().getStringArray(R.array.passType)[spn.getSelectedItemPosition()].toLowerCase().contains("abier")) {
+                        if (GestionArchivos.buscarRed(ssID, GestionArchivos.getSharedPreferencesListado(this))) {
+                            Intent i = new Intent(this, DialogoConfirmarConexionDuplicada.class);
+                            i.putExtra("ssid", ssID);
+                            startActivityForResult(i, 1);
+                        } else {
+                            add();
+                            cerrarDNC();
+                        }
+                    } else{
+                        Toast.makeText(this,R.string.error_pass_vacia,Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException | UnknownHostException e) {
                     e.printStackTrace();

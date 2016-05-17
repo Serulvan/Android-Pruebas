@@ -33,9 +33,10 @@
     <string name="pass_seguridad">SEGURIDAD</string>
 
     <string name="error_campos_vacios">Rellena todos los campos.</string>
+    <string name="error_pass_vacia">Introduce una contraseña o cambia de seguridad a "Abierto".</string>
 
     <array name="passType">
-        <item>Abierta</item>
+        <item>Abierto</item>
         <item>WEP</item>
         <item>WPA/WPA2 PSK</item>
         <!--item>experi mental</item-->
