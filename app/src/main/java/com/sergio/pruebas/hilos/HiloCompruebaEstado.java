@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
@@ -21,6 +23,9 @@ import com.sergio.pruebas.odenadores.OrdenarWifiScanPorLevel;
 
 import org.json.JSONException;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +35,6 @@ import java.util.List;
 public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     private Context context;
     private Boolean activo = true;
-    private int i = 0;
 
     public HiloCompruebaEstado(Context context, Boolean activo) {
         this.context = context;
@@ -55,9 +59,42 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
-        WifiManager wm = (WifiManager) context.getSystemService(context.WIFI_SERVICE);
-        if (checkLink(wm)){
+        try {
+            WifiManager wm = (WifiManager) context.getSystemService(context.WIFI_SERVICE);
+            if (checkLink(wm)) {
+                ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (hasActiveNetConextion(cm)) {
+                    //search int currentSignal = wm.getConnectionInfo().getRssi();
+                    String[] sArr = search(wm, -1, wm.getConnectionInfo().getRssi());
+                    int pos = Integer.valueOf(sArr[1]);
+                    while (pos!= -1) {//busqueda de conexiones en rango validas
+                        //change
+                        Conexion c = GestionArchivos.obtenerLista(GestionArchivos.getSharedPreferencesListado(context)).get(pos);
+                        changeConection(c,wm);
+                        if (!hasActiveInternetConnection()) {
+                            //no hay internet
+                            if (!GestionArchivos.isOnWhiteList(sArr,c)){
+                                c.addBlackListMac(sArr[0]);
+                            }
+                            sArr = search(wm, pos, wm.getConnectionInfo().getRssi());
+                            pos = Integer.valueOf(sArr[1]);
+                        }else{
+                            //si hay internet
+                            break;
+                        }
+                    }
+                } else {
+                    String sArr[] = search(wm, -1, -200);
+                    int pos = Integer.valueOf(sArr[1]);
+                    if (pos!=-1){
+                        //change
+                        changeConection(GestionArchivos.obtenerLista(GestionArchivos.getSharedPreferencesListado(context)).get(pos),wm);
+                    }
+                }
 
+            }
+        } catch (JSONException | UnknownHostException e) {
+            e.printStackTrace();
         }
     }
     //metodo buscar la red wifi mas alta(por encima de la intensidad de la señal actual)
@@ -67,11 +104,32 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     }
 
     private boolean checkLink(WifiManager wm){
-        wm.startScan();
         if (wm.getWifiState()==WifiManager.WIFI_STATE_ENABLED){
+            wm.startScan();
             return true;
         }
         return false;
+    }
+
+    private String[] search(WifiManager wm, int startAt, int currentSignal) throws JSONException, UnknownHostException {
+        List<ScanResult> redes = wm.getScanResults();
+        Collections.sort(redes, new OrdenarWifiScanPorLevel());
+        SharedPreferences sp = GestionArchivos.getSharedPreferencesListado(context);
+        ArrayList<Conexion> misRedes = GestionArchivos.obtenerLista(sp);
+        String z[] = {"","-1"};
+        for (int i = startAt+1; i < redes.size(); i++) {
+            if (redes.get(i).level<currentSignal){
+                break;
+            }
+            for (int j = 0; j < misRedes.size(); j++) {
+                if (redes.get(i).SSID.equals(misRedes.get(j).getSsid())){
+                    z[0]=redes.get(i).BSSID;
+                    z[1]=String.valueOf(j);
+                    return z;
+                }
+            }
+        }
+        return z;
     }
 
     private int getPosReConection(WifiManager wm) throws JSONException, UnknownHostException {
@@ -135,6 +193,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
             android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_NETMASK, c.getMasc().getHostAddress());
             android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_IP, c.getIp().getHostAddress());
         }
+        GestionPreferencias.setActualConexionId(GestionPreferencias.getSharedPreferencesConfig(context),c.getId());
         wm.disconnect();
         wm.enableNetwork(netId, true);
         wm.reconnect();
@@ -148,7 +207,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         ncb.setContentText(context.getString(R.string.notificacion_cuerpo) + c.getSsid());
         ncb.setAutoCancel(true);
         if (GestionPreferencias.getConfigNotifVibracion(GestionPreferencias.getSharedPreferencesConfig(context))) {
-            long[] pat = {0, 200, 200};
+            long[] pat = {0, 500, 200};
             ncb.setVibrate(pat);
         }
         if (GestionPreferencias.getConfigNotifSonido(GestionPreferencias.getSharedPreferencesConfig(context))) {
@@ -161,8 +220,25 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         PendingIntent rpi = PendingIntent.getActivity(context, 0, /*intent*/new Intent(), 0);
         ncb.setContentIntent(rpi);
 
-        int mNotificationId = i++;
+        int mNotificationId =  c.getId();
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyMgr.notify(mNotificationId, ncb.build());
+    }
+
+    private boolean hasActiveNetConextion(ConnectivityManager cm){
+        NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    private boolean hasActiveInternetConnection() {
+        try {
+            HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+            urlc.setRequestProperty("User-Agent", "Test");
+            urlc.setRequestProperty("Connection", "close");
+            urlc.setConnectTimeout(1500);
+            urlc.connect();
+            return (urlc.getResponseCode() == 200);
+        } catch (IOException e) {}
+        return false;
     }
 }

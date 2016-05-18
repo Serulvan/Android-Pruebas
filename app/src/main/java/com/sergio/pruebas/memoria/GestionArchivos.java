@@ -10,6 +10,7 @@ import com.sergio.pruebas.conexiones.Conexion;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -54,6 +55,34 @@ public abstract class GestionArchivos {
             return arrList;
         }
 
+    }
+
+    public static Conexion obtenerConexionPorId(SharedPreferences sp, int id) throws JSONException, UnknownHostException {
+        ArrayList<Conexion> lista = obtenerLista(sp);
+        for (int i = 0; i < lista.size(); i++) {
+            if (id==lista.get(i).getId()){
+                return lista.get(i);
+            }
+        }
+        return null;
+    }
+
+    public static boolean isOnWhiteList(String[] sArr, Conexion c){
+        for (int i = 0; i < c.getWhiteList().size(); i++) {
+            if (sArr[0].equals(c.getWhiteList().get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isOnBlackList(String[] sArr, Conexion c){
+        for (int i = 0; i < c.getBlackList().size(); i++) {
+            if (sArr[0].equals(c.getBlackList().get(i))){
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void guardarLista(ArrayList<Conexion> arrLista, SharedPreferences sp) throws JSONException {

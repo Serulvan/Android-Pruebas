@@ -1,15 +1,18 @@
 package com.sergio.pruebas.conexiones;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Conexion implements Comparator {
     private String ssid,pass, cifrado;
     private InetAddress ip,masc,puerta;
+    private ArrayList<String> whiteList, blackList;
     private boolean auto;
     private int id;
     private static int currentMaxId=-1;
@@ -35,6 +38,10 @@ public class Conexion implements Comparator {
             masc = InetAddress.getByName(jo.getString("masc"));
             puerta = InetAddress.getByName(jo.getString("puerta"));
         } else auto=true;
+        whiteList = new ArrayList<>();
+        rellenarList(whiteList,jo.getJSONArray("whiteList"));
+        blackList = new ArrayList<>();
+        rellenarList(blackList,jo.getJSONArray("blackList"));
     }
 
     public Conexion(String ssid, String pass, String cifrado) {
@@ -45,6 +52,8 @@ public class Conexion implements Comparator {
         }
         auto=true;
         id=getCurrentMaxId();
+        whiteList = new ArrayList<>();
+        blackList = new ArrayList<>();
     }
 
     public Conexion(String ssid, String pass, String cifrado, InetAddress ip, InetAddress masc, InetAddress puerta) {
@@ -58,6 +67,8 @@ public class Conexion implements Comparator {
         this.puerta = puerta;
         auto=false;
         id=getCurrentMaxId();
+        whiteList = new ArrayList<>();
+        blackList = new ArrayList<>();
     }
 
     public int getId() {
@@ -116,6 +127,28 @@ public class Conexion implements Comparator {
         this.puerta = puerta;
     }
 
+    public ArrayList<String> getWhiteList() {
+        return whiteList;
+    }
+
+    public void addWhiteListMac(String mac) {
+        if (whiteList==null){
+            whiteList = new ArrayList();
+        }
+        whiteList.add(mac);
+    }
+
+    public ArrayList<String> getBlackList() {
+        return blackList;
+    }
+
+    public void addBlackListMac(String mac) {
+        if (blackList==null){
+            blackList = new ArrayList();
+        }
+        blackList.add(mac);
+    }
+
     public String getSDHCP(){
         if (auto) {
             return "DHCP";
@@ -169,10 +202,18 @@ public class Conexion implements Comparator {
             jo.put("masc", masc.getHostAddress());
             jo.put("puerta", puerta.getHostAddress());
         }
+        jo.put("whiteList",whiteList);
+        jo.put("blackList",blackList);
         return jo;
     }
 
     private int getCurrentMaxId(){
         return ++currentMaxId;
+    }
+
+    private void rellenarList(ArrayList<String> list, JSONArray ja) throws JSONException {
+        for (int i = 0; i < ja.length(); i++) {
+            list.add(ja.getString(i));
+        }
     }
 }
