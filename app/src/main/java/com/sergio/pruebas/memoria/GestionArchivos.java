@@ -67,18 +67,18 @@ public abstract class GestionArchivos {
         return null;
     }
 
-    public static boolean isOnWhiteList(String[] sArr, Conexion c){
+    public static boolean isOnWhiteList(String s, Conexion c){
         for (int i = 0; i < c.getWhiteList().size(); i++) {
-            if (sArr[0].equals(c.getWhiteList().get(i))){
+            if (s.equals(c.getWhiteList().get(i))){
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isOnBlackList(String[] sArr, Conexion c){
+    public static boolean isOnBlackList(String s, Conexion c){
         for (int i = 0; i < c.getBlackList().size(); i++) {
-            if (sArr[0].equals(c.getBlackList().get(i))){
+            if (s.equals(c.getBlackList().get(i))){
                 return true;
             }
         }

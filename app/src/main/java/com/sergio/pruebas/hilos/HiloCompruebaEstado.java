@@ -35,6 +35,7 @@ import java.util.List;
 public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     private Context context;
     private Boolean activo = true;
+    private ArrayList<Conexion> misRedes;
 
     public HiloCompruebaEstado(Context context, Boolean activo) {
         this.context = context;
@@ -57,39 +58,32 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     }
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        try {
+            misRedes = GestionArchivos.obtenerLista(GestionArchivos.getSharedPreferencesListado(context));
+        } catch (JSONException | UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
         try {
             WifiManager wm = (WifiManager) context.getSystemService(context.WIFI_SERVICE);
             if (checkLink(wm)) {
                 ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                if (hasActiveNetConextion(cm)) {
-                    //search int currentSignal = wm.getConnectionInfo().getRssi();
-                    String[] sArr = search(wm, -1, wm.getConnectionInfo().getRssi());
-                    int pos = Integer.valueOf(sArr[1]);
-                    while (pos!= -1) {//busqueda de conexiones en rango validas
-                        //change
-                        Conexion c = GestionArchivos.obtenerLista(GestionArchivos.getSharedPreferencesListado(context)).get(pos);
-                        changeConection(c,wm);
-                        if (!hasActiveInternetConnection()) {
-                            //no hay internet
-                            if (!GestionArchivos.isOnWhiteList(sArr,c)){
-                                c.addBlackListMac(sArr[0]);
-                            }
-                            sArr = search(wm, pos, wm.getConnectionInfo().getRssi());
-                            pos = Integer.valueOf(sArr[1]);
-                        }else{
-                            //si hay internet
-                            break;
-                        }
-                    }
+                if (hasActiveNetConextion(cm)) {//hay conexion?
+                    //hay conexion
+                    //search
+                    int currentSignal = wm.getConnectionInfo().getRssi();
+                    String[] sArr = search(wm, -1, currentSignal);
+                    searchByRange(sArr, wm, currentSignal);
                 } else {
+                    //no hay conexion
                     String sArr[] = search(wm, -1, -200);
-                    int pos = Integer.valueOf(sArr[1]);
-                    if (pos!=-1){
-                        //change
-                        changeConection(GestionArchivos.obtenerLista(GestionArchivos.getSharedPreferencesListado(context)).get(pos),wm);
-                    }
+                    searchByRange(sArr,wm,-200);
                 }
 
             }
@@ -98,6 +92,31 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         }
     }
     //metodo buscar la red wifi mas alta(por encima de la intensidad de la señal actual)
+
+    private void searchByRange(String[] sArr, WifiManager wm, int currentSignal) throws JSONException, UnknownHostException {
+        int pos = Integer.valueOf(sArr[1]);
+        while (pos!= -1) {//busqueda de conexiones en rango validas
+            //change
+            if (!GestionArchivos.isOnBlackList(sArr[0], misRedes.get(pos))) {//lista negra?
+                //no
+                changeConection(misRedes.get(pos), wm);
+                if (!hasActiveInternetConnection()) {
+                    //no hay internet
+                    if (!GestionArchivos.isOnWhiteList(sArr[0], misRedes.get(pos))) {
+                        misRedes.get(pos).addBlackListMac(sArr[0]);
+                    }
+                    sArr = search(wm, pos, currentSignal);
+                    pos = Integer.valueOf(sArr[1]);
+                } else {
+                    //hay internet
+                    if (!GestionArchivos.isOnWhiteList(sArr[0], misRedes.get(pos))) {
+                        misRedes.get(pos).addWhiteListMac(sArr[0]);
+                    }
+                    break;
+                }
+            }
+        }
+    }
 
     public void letFinish(){
         activo=false;
@@ -114,12 +133,10 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     private String[] search(WifiManager wm, int startAt, int currentSignal) throws JSONException, UnknownHostException {
         List<ScanResult> redes = wm.getScanResults();
         Collections.sort(redes, new OrdenarWifiScanPorLevel());
-        SharedPreferences sp = GestionArchivos.getSharedPreferencesListado(context);
-        ArrayList<Conexion> misRedes = GestionArchivos.obtenerLista(sp);
         String z[] = {"","-1"};
         for (int i = startAt+1; i < redes.size(); i++) {
             if (redes.get(i).level<currentSignal){
-                break;
+                return z;
             }
             for (int j = 0; j < misRedes.size(); j++) {
                 if (redes.get(i).SSID.equals(misRedes.get(j).getSsid())){
@@ -127,32 +144,6 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
                     z[1]=String.valueOf(j);
                     return z;
                 }
-            }
-        }
-        return z;
-    }
-
-    private int getPosReConection(WifiManager wm) throws JSONException, UnknownHostException {
-        List<ScanResult> redes = wm.getScanResults();
-        Collections.sort(redes, new OrdenarWifiScanPorLevel());
-        SharedPreferences sp = GestionArchivos.getSharedPreferencesListado(context);
-        ArrayList<Conexion> misRedes = GestionArchivos.obtenerLista(sp);
-        int currentSignal = wm.getConnectionInfo().getRssi();
-        int z = -1,i = 0,j;
-        boolean stop=false;
-        while (i<redes.size()&&redes.get(i).level>currentSignal){
-            j=0;
-            while(j<misRedes.size()){
-                if (!redes.get(i).SSID.equals(misRedes.get(j).getSsid())) {
-                    j++;
-                }else{
-                    z=j;
-                    stop=true;
-                    break;
-                }
-            }
-            if (stop){
-                break;
             }
         }
         return z;

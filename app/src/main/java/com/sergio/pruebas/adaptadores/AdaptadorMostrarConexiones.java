@@ -41,6 +41,9 @@ public class AdaptadorMostrarConexiones extends ArrayAdapter {
             datos1.setText(arr.get(position).getPass());
         }else datos1.setVisibility(View.INVISIBLE);
 
+        //TextView datos3 = (TextView) item.findViewById(R.id.datos3);
+        //datos3.setText(arr.get(position).getId());
+
         return item;
     }
 }

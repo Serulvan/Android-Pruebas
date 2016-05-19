@@ -66,6 +66,8 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(this,DialogoEditarBorrar.class));
+        Intent i = new Intent(this,DialogoEditarBorrar.class);
+        i.putExtra("id", Integer.valueOf((String)view.findViewById(R.id.ssid_list).getTag()));
+        startActivity(i);
     }
 }

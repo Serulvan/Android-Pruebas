@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.sergio.pruebas.R;
 import com.sergio.pruebas.test;
@@ -31,7 +32,8 @@ public class DialogoEditarBorrar extends Activity implements View.OnClickListene
             startActivity(i);
         }else{
             //borrar la red de la lista
-            finish();
+            //finish();
+            Toast.makeText(this, getIntent().getIntExtra("id", -1), Toast.LENGTH_SHORT).show();
         }
     }
 }
