@@ -39,9 +39,13 @@ public class Conexion implements Comparator {
             puerta = InetAddress.getByName(jo.getString("puerta"));
         } else auto=true;
         whiteList = new ArrayList<>();
-        rellenarList(whiteList,jo.getJSONArray("whiteList"));
+        if (jo.get("whiteList").toString().length()>2) {
+            rellenarList(whiteList, jo.getJSONArray("whiteList"));
+        }
         blackList = new ArrayList<>();
-        rellenarList(blackList,jo.getJSONArray("blackList"));
+        if (jo.get("blackList").toString().length()>2) {
+            rellenarList(blackList,jo.getJSONArray("blackList"));
+        }
     }
 
     public Conexion(String ssid, String pass, String cifrado) {

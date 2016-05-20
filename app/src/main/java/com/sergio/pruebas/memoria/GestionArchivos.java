@@ -38,9 +38,20 @@ public abstract class GestionArchivos {
         for (int i=0; i<arrLista.size();i++ ){
             if (ssid.equals(arrLista.get(i).getSsid())){
                 return true;
-            } else return false;
+            }
         }
         return false;
+    }
+
+    public static void borrarRedPorId(int id, SharedPreferences sp) throws JSONException, UnknownHostException {
+        ArrayList<Conexion> arrLista = obtenerLista(sp);
+        for (int i = 0; i < arrLista.size(); i++) {
+            if (id==arrLista.get(i).getId()){
+                arrLista.remove(i);
+                guardarLista(arrLista,sp);
+                return;
+            }
+        }
     }
 
     public static ArrayList<Conexion> obtenerLista(SharedPreferences sp) throws JSONException, UnknownHostException {
@@ -57,7 +68,7 @@ public abstract class GestionArchivos {
 
     }
 
-    public static Conexion obtenerConexionPorId(SharedPreferences sp, int id) throws JSONException, UnknownHostException {
+    public static Conexion obtenerConexionPorId( int id, SharedPreferences sp) throws JSONException, UnknownHostException {
         ArrayList<Conexion> lista = obtenerLista(sp);
         for (int i = 0; i < lista.size(); i++) {
             if (id==lista.get(i).getId()){

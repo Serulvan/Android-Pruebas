@@ -77,7 +77,7 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
     @Override
     public void onClick(View v) {
         if(v.getId()==cancelar.getId()){
-            cerrarDNCC(Activity.RESULT_CANCELED);
+            cerrarDNCC(RESULT_CANCELED);
         } else if (v.getId()==continuar.getId()){
             try {
                 if (ip.getText().toString().trim().length()>0&&
@@ -104,12 +104,12 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
-            if(resultCode == Activity.RESULT_OK){
+            if(resultCode == RESULT_OK){
                 add();
-                cerrarDNCC(Activity.RESULT_OK);
+                cerrarDNCC(RESULT_OK);
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                cerrarDNCC(Activity.RESULT_CANCELED);
+            if (resultCode == RESULT_CANCELED) {
+                cerrarDNCC(RESULT_CANCELED);
             }
         }
     }

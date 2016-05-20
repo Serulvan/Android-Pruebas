@@ -8,10 +8,18 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.sergio.pruebas.EditarConexion;
 import com.sergio.pruebas.R;
+import com.sergio.pruebas.memoria.GestionArchivos;
 import com.sergio.pruebas.test;
 
+import org.json.JSONException;
+
+import java.net.UnknownHostException;
+
 public class DialogoEditarBorrar extends Activity implements View.OnClickListener {
+
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,17 +31,26 @@ public class DialogoEditarBorrar extends Activity implements View.OnClickListene
 
         btnEdit.setOnClickListener(this);
         btnCanc.setOnClickListener(this);
+
+        id = getIntent().getIntExtra("id", -1);
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.deb_btn_edit){
-            Intent i = new Intent(this, test.class);
+            Intent i = new Intent(this, EditarConexion.class);
+            i.putExtra("id",id);
             startActivity(i);
+            finish();
         }else{
-            //borrar la red de la lista
-            //finish();
-            Toast.makeText(this, getIntent().getIntExtra("id", -1), Toast.LENGTH_SHORT).show();
+            try {
+                GestionArchivos.borrarRedPorId(id,GestionArchivos.getSharedPreferencesListado(this));
+            } catch (JSONException | UnknownHostException e) {
+                e.printStackTrace();
+            }
+            //METER METODO DE CONFIRMACION REPITIENDO EL SSID POR EJEMPLO
+            setResult(RESULT_OK, new Intent());
+            finish();
         }
     }
 }

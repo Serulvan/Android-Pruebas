@@ -28,7 +28,7 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
 
     private ListView lv;
     private Button btnAtras;
-    private String listado;
+    private ArrayList<Conexion> listado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +46,11 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         try {
-            SharedPreferences sp = GestionArchivos.getSharedPreferencesListado(this);
-            listado = sp.getString("$jList", "");
-            if(!listado.isEmpty()) {
-                lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.wifi_bar, GestionArchivos.obtenerLista(sp)));
-            }else {
+            listado=GestionArchivos.obtenerLista(GestionArchivos.getSharedPreferencesListado(this));
+            if(listado.isEmpty()) {
                 Toast.makeText(this,R.string.error_sin_datos,Toast.LENGTH_LONG).show();
             }
+            lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.wifi_bar, listado));
         } catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
         }
@@ -61,13 +59,22 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         finish();
-        //Toast.makeText(this,listado,Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent i = new Intent(this,DialogoEditarBorrar.class);
         i.putExtra("id", Integer.valueOf((String)view.findViewById(R.id.ssid_list).getTag()));
-        startActivity(i);
+        startActivityForResult(i,0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 0:
+                onStart();
+                break;
+        }
     }
 }

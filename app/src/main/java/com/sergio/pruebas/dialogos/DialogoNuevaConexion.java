@@ -108,16 +108,16 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0){
             //dialogoNuevaConexionCongfig
-            if(resultCode == Activity.RESULT_OK){
+            if(resultCode == RESULT_OK){
                 cerrarDNC();
-            } else if (resultCode == Activity.RESULT_CANCELED) {
+            } else if (resultCode == RESULT_CANCELED) {
             }
         }else if (requestCode == 1) {
             //dialogoConfirmarConexionDuplicada
-            if(resultCode == Activity.RESULT_OK){
+            if(resultCode == RESULT_OK){
                 add();
                 cerrarDNC();
-            } else if (resultCode == Activity.RESULT_CANCELED) {
+            } else if (resultCode == RESULT_CANCELED) {
             }
         }
 
