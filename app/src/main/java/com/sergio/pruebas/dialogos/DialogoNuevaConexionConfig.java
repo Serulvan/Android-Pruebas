@@ -24,7 +24,6 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
     private EditText ip, mascara, puerta;
     private Button cancelar, continuar;
     private String ssid, pass, segur;
-    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,6 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
 
         cancelar.setOnClickListener(this);
         continuar.setOnClickListener(this);
-
-        i = new Intent();
 
         ssid = getIntent().getStringExtra("ssid");
         pass = getIntent().getStringExtra("pass");
@@ -90,6 +87,7 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
                         startActivityForResult(j, 0);
                     }else {
                         add();
+                        cerrarDNCC(RESULT_OK);
                     }
                 }else{
                     Toast.makeText(this,R.string.error_campos_vacios,Toast.LENGTH_SHORT).show();
@@ -130,7 +128,7 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
     }
 
     public void cerrarDNCC(int result){
-        setResult(result, i);
+        setResult(result, new Intent());
         finish();
     }
 

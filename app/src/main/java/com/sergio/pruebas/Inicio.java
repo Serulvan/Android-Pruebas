@@ -35,7 +35,7 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, C
 
         stateServiceTbtn = (ToggleButton)findViewById(R.id.tbserv);
         stateServiceTbtn.setChecked(GestionPreferencias.getConfigServActivo(GestionPreferencias.getSharedPreferencesConfig(this)));
-        //stateServiceTbtn.setOnCheckedChangeListener(this);
+        stateServiceTbtn.setOnCheckedChangeListener(this);
     }
 
     @Override

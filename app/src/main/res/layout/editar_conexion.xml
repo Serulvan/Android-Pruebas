@@ -29,6 +29,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ec_ssid"
+                    android:id="@+id/textView11" />
+
                 <EditText
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
@@ -48,7 +54,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/ec_spn"
-                    android:spinnerMode="dialog" />
+                    android:spinnerMode="dialog"
+                    android:entries="@array/passType"
+                    android:prompt="@string/pass_seguridad" />
             </LinearLayout>
 
             <LinearLayout
@@ -59,6 +67,12 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ec_pass"
+                    android:id="@+id/textView12" />
 
                 <EditText
                     android:layout_width="150dp"
@@ -78,7 +92,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New CheckBox"
+                    android:text="@string/ec_cb_avanzado"
                     android:id="@+id/ec_cb"
                     android:checked="false" />
             </LinearLayout>
@@ -90,7 +104,8 @@
                 android:id="@+id/ec_layout_static"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -99,6 +114,12 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ec_Ip"
+                        android:id="@+id/textView13" />
 
                     <EditText
                         android:layout_width="150dp"
@@ -115,11 +136,18 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
 
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ec_masc"
+                        android:id="@+id/textView14" />
+
                     <EditText
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/ec_et_masc"
                         android:textAlignment="center" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -129,6 +157,12 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ec_puerta"
+                        android:id="@+id/textView15" />
 
                     <EditText
                         android:layout_width="150dp"
@@ -144,19 +178,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp" >
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/ec_btn_ewl" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ec_btn_ebl"
-                    android:text="New Button" />
+                    android:text="@string/ec_btn_ewl"
+                    android:id="@+id/ec_btn_ewl"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -168,16 +197,34 @@
                 android:layout_marginBottom="10dp">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/ec_btn_salir" />
+                    android:id="@+id/ec_btn_ebl"
+                    android:text="@string/ec_btn_ebl"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/ec_btn_guardar" />
+                    android:text="@string/ec_btn_salir"
+                    android:id="@+id/ec_btn_salir"
+                    android:layout_weight="0" />
+
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ec_btn_guardar"
+                    android:id="@+id/ec_btn_guardar"
+                    android:layout_weight="0" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

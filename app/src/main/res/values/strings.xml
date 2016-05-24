@@ -17,6 +17,18 @@
     <string name="deb_editar">EDITAR</string>
     <string name="deb_borrar">BORRAR</string>
 
+    <string name="ec_ssid">SSID:</string>
+    <string name="ec_pass">Contraseña:</string>
+    <string name="ec_Ip">Ip:</string>
+    <string name="ec_masc">Máscara:</string>
+    <string name="ec_puerta">Puerta:</string>
+    <string name="ec_btn_ewl">Editar Lista Blanca</string>
+    <string name="ec_btn_ebl">Editar Lista Negra</string>
+    <string name="ec_btn_guardar">Guardar</string>
+    <string name="ec_btn_salir">Salir</string>
+    <string name="ec_cb_avanzado">Configuracion avanzada.</string>
+
+
     <string name="error_ssid_vacio">El campo "SSID" no puede estar vacio.</string>
     <string name="error_ip_ipnovalida">Introduce una IP válida.</string>
     <string name="error_ip_mascnovalida">Introduce una máscara de red válida.</string>
@@ -34,6 +46,8 @@
 
     <string name="error_campos_vacios">Rellena todos los campos.</string>
     <string name="error_pass_vacia">Introduce una contraseña o cambia de seguridad a "Abierto".</string>
+    <string name="i_swbtn_on">Encendido</string>
+    <string name="i_swbtn_off">Apagado</string>
 
     <array name="passType">
         <item>Abierto</item>

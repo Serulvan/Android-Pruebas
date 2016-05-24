@@ -223,7 +223,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
 
     private boolean hasActiveInternetConnection() {
         try {
-            HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+            HttpURLConnection urlc = (HttpURLConnection) (new URL("http://216.58.210.174").openConnection());
             urlc.setRequestProperty("User-Agent", "Test");
             urlc.setRequestProperty("Connection", "close");
             urlc.setConnectTimeout(1500);

@@ -44,4 +44,14 @@
             android:visibility="gone"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/wb_imv_wifisignal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/wifi_o_0"
+        android:layout_margin="10dp"
+        android:visibility="gone" />
 </RelativeLayout>
