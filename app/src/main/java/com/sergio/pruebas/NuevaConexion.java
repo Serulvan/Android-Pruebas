@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sergio.pruebas.dialogos.DialogoNuevaConexion;
 import com.sergio.pruebas.dialogos.DialogoNuevaConexionConfig;

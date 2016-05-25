@@ -54,7 +54,8 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
         } else if(typePass.toUpperCase().contains("WPA")){
             spn.setSelection(2);
         } else {
-            spn.setSelection(3);
+            spn.setSelection(0);
+            pass.setVisibility(View.GONE);
         }
 
         btnContin = (Button)findViewById(R.id.dnc_btncontinuar);

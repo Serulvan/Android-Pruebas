@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Conexion implements Comparator {
-    private String ssid,pass, cifrado;
-    private InetAddress ip,masc,puerta;
+    private String ssid,pass, cifrado,ip,masc,puerta;
     private ArrayList<String> whiteList, blackList;
     private boolean auto;
     private int id;
     private static int currentMaxId=-1;
+    public static final String CIFRADO_ABIERTO = "Abierto";
+    public static final String CIFRADO_WEP = "WEP";
+    public static final String CIFRADO_WPA = "WPA/WPA2 PSK";
+    public static final String CIFRADO_IEEE80XX = "";
 
     public Conexion() {
         //solo se usa para ordenar con el sort
@@ -24,7 +27,7 @@ public class Conexion implements Comparator {
     public Conexion(JSONObject jo) throws JSONException, UnknownHostException {
         ssid = jo.getString("ssid");
         cifrado=jo.getString("cifrado");
-        if (!cifrado.equals("abierto")){
+        if (!cifrado.equals(CIFRADO_ABIERTO)){
             pass = jo.getString("pass");
         }
         auto = jo.getBoolean("auto");
@@ -34,9 +37,9 @@ public class Conexion implements Comparator {
         }
         if (jo.has("ip")) {
             auto=false;
-            ip = InetAddress.getByName(jo.getString("ip"));
-            masc = InetAddress.getByName(jo.getString("masc"));
-            puerta = InetAddress.getByName(jo.getString("puerta"));
+            ip = jo.getString("ip");
+            masc = jo.getString("masc");
+            puerta = jo.getString("puerta");
         } else auto=true;
         whiteList = new ArrayList<>();
         if (jo.get("whiteList").toString().length()>2) {
@@ -51,7 +54,7 @@ public class Conexion implements Comparator {
     public Conexion(String ssid, String pass, String cifrado) {
         this.ssid = ssid;
         this.cifrado = cifrado;
-        if (!cifrado.equals("abierto")) {
+        if (!cifrado.equals(CIFRADO_ABIERTO)){
             this.pass = pass;
         }
         auto=true;
@@ -60,10 +63,10 @@ public class Conexion implements Comparator {
         blackList = new ArrayList<>();
     }
 
-    public Conexion(String ssid, String pass, String cifrado, InetAddress ip, InetAddress masc, InetAddress puerta) {
+    public Conexion(String ssid, String pass, String cifrado, String ip, String masc, String puerta) {
         this.ssid = ssid;
         this.cifrado = cifrado;
-        if (!cifrado.equals("abierto")) {
+        if (!cifrado.equals(CIFRADO_ABIERTO)){
             this.pass = pass;
         }
         this.ip = ip;
@@ -107,27 +110,27 @@ public class Conexion implements Comparator {
         this.cifrado = cifrado;
     }
 
-    public InetAddress getIp() {
+    public String getIp() {
         return ip;
     }
 
-    public void setIp(InetAddress ip) {
+    public void setIp(String ip) {
         this.ip = ip;
     }
 
-    public InetAddress getMasc() {
+    public String getMasc() {
         return masc;
     }
 
-    public void setMasc(InetAddress masc) {
+    public void setMasc(String masc) {
         this.masc = masc;
     }
 
-    public InetAddress getPuerta() {
+    public String getPuerta() {
         return puerta;
     }
 
-    public void setPuerta(InetAddress puerta) {
+    public void setPuerta(String puerta) {
         this.puerta = puerta;
     }
 
@@ -152,7 +155,7 @@ public class Conexion implements Comparator {
         }
         blackList.add(mac);
     }
-
+    @Deprecated
     public String getSDHCP(){
         if (auto) {
             return "DHCP";
@@ -173,9 +176,9 @@ public class Conexion implements Comparator {
             return 0;
         }
     }
-
+    @Deprecated
     public int getPrefijoRed(){
-        String sa[] = masc.getHostAddress().split("\\.");
+        String sa[] = masc.split("\\.");
         String s = Integer.toBinaryString(Integer.parseInt(sa[0]))+
                 Integer.toBinaryString(Integer.parseInt(sa[1]))+
                 Integer.toBinaryString(Integer.parseInt(sa[2]))+
@@ -195,16 +198,16 @@ public class Conexion implements Comparator {
         JSONObject jo = new JSONObject();
         jo.put("ssid",ssid);
         jo.put("cifrado",cifrado);
-        if (!cifrado.equals("abierto")){
+        if (!cifrado.equals(CIFRADO_ABIERTO)){
             jo.put("pass",pass);
         }
         jo.put("auto",auto);
         jo.put("id",id);
         jo.put("currentMaxId",currentMaxId);
         if (!auto) {
-            jo.put("ip", ip.getHostAddress());
-            jo.put("masc", masc.getHostAddress());
-            jo.put("puerta", puerta.getHostAddress());
+            jo.put("ip", ip);
+            jo.put("masc", masc);
+            jo.put("puerta", puerta);
         }
         jo.put("whiteList",whiteList);
         jo.put("blackList",blackList);

@@ -115,9 +115,9 @@ public class DialogoNuevaConexionConfig extends Activity implements View.OnFocus
     private void add(){
         try {
             Conexion c = new Conexion(ssid,pass,segur,
-                    InetAddress.getByName(ip.getText().toString()),
-                    InetAddress.getByName(mascara.getText().toString()),
-                    InetAddress.getByName(puerta.getText().toString()));
+                    ip.getText().toString(),
+                    mascara.getText().toString(),
+                    puerta.getText().toString());
             SharedPreferences sp = getSharedPreferences("$$listado", MODE_PRIVATE);
             GestionArchivos.añadirRed(c, sp);
             Toast.makeText(this,R.string.exito_red_añadida,Toast.LENGTH_SHORT).show();

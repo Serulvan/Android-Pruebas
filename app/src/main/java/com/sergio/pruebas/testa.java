@@ -21,7 +21,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
-public class test extends AppCompatActivity implements View.OnClickListener {
+public class testa extends AppCompatActivity implements View.OnClickListener {
 
     TextView ssid1, pass1, ip1, masc1, puerta1, ssid2, pass2, ip2, masc2, puerta2;
     Button btser, bttest;
@@ -52,11 +52,7 @@ public class test extends AppCompatActivity implements View.OnClickListener {
         masc = masc1.getText().toString();
         puerta = puerta1.getText().toString();
 
-        try {
-            c1 = new Conexion(ssid,pass,"wpa", InetAddress.getByName(ip),InetAddress.getByName(masc),InetAddress.getByName(puerta));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        c1 = new Conexion(ssid,pass,"wpa", ip,masc,puerta);
 
         ssid = ssid2.getText().toString();
         pass = pass2.getText().toString();
@@ -64,11 +60,7 @@ public class test extends AppCompatActivity implements View.OnClickListener {
         masc = masc2.getText().toString();
         puerta = puerta2.getText().toString();
 
-        try {
-            c2 = new Conexion(ssid,pass,"wep", InetAddress.getByName(ip),InetAddress.getByName(masc),InetAddress.getByName(puerta));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        c2 = new Conexion(ssid,pass,"wep", ip,masc,puerta);
 
         btser = (Button)findViewById(R.id.btnser);
         bttest = (Button)findViewById(R.id.btntest);
@@ -82,14 +74,14 @@ public class test extends AppCompatActivity implements View.OnClickListener {
         if (v.getId() == btser.getId()) {
             //Set to 1 for true and 0 for false.
             android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_USE_STATIC_IP, "1");
-            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_GATEWAY, c1.getPuerta().getHostAddress());
-            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_NETMASK, c1.getMasc().getHostAddress());
-            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_IP, c1.getIp().getHostAddress());
+            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_GATEWAY, c1.getPuerta());
+            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_NETMASK, c1.getMasc());
+            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_IP, c1.getIp());
         }else{
             android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_USE_STATIC_IP, "0");
-            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_GATEWAY, c2.getPuerta().getHostAddress());
-            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_NETMASK, c2.getMasc().getHostAddress());
-            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_IP, c2.getIp().getHostAddress());
+            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_GATEWAY, c2.getPuerta());
+            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_NETMASK, c2.getMasc());
+            android.provider.Settings.System.putString(getContentResolver(), android.provider.Settings.System.WIFI_STATIC_IP, c2.getIp());
         }
     }
 }

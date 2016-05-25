@@ -34,12 +34,15 @@ public class AdaptadorMostrarConexiones extends ArrayAdapter {
         }
         TextView ssid = (TextView)item.findViewById(R.id.ssid_list);
         ssid.setText(arr.get(position).getSsid());
-        ssid.setTag(String.valueOf(arr.get(position).getId()));
+        ssid.setTag(arr.get(position).getId());
 
         TextView datos1 = (TextView) item.findViewById(R.id.datos1);
-        if (!arr.get(position).getPass().isEmpty()) {
+        if(arr.get(position).getCifrado().equals(Conexion.CIFRADO_ABIERTO)){
+            datos1.setVisibility(View.INVISIBLE);
+        }else{
             datos1.setText(arr.get(position).getPass());
-        }else datos1.setVisibility(View.INVISIBLE);
+            datos1.setVisibility(View.VISIBLE);
+        }
 
         //TextView datos3 = (TextView) item.findViewById(R.id.datos3);
         //datos3.setText(arr.get(position).getId());

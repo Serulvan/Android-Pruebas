@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -18,9 +19,8 @@ import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
-public class EditarConexion extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class EditarConexion extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
-    Conexion c;
     EditText ssid, pass, ip, masc, puerta;
     LinearLayout passLayout, staticLayout;
     Spinner spnCifrado;
@@ -46,6 +46,7 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
         spnCifrado.setOnItemSelectedListener(this);
 
         cbDhcp = (CheckBox) findViewById(R.id.ec_cb);
+        cbDhcp.setOnCheckedChangeListener(this);
 
         editWitheList = (Button) findViewById(R.id.ec_btn_ewl);
         editBlackList = (Button) findViewById(R.id.ec_btn_ebl);
@@ -60,26 +61,81 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
         }else{
             try {
-                c = GestionArchivos.obtenerConexionPorId(id,GestionArchivos.getSharedPreferencesListado(this));
+                Conexion c = GestionArchivos.obtenerConexionPorId(id,GestionArchivos.getSharedPreferencesListado(this));
+                setDatos(c);
             } catch (JSONException | UnknownHostException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ec_btn_guardar:
+                guardar();
+                break;
+            case R.id.ec_btn_salir:
+                finish();
+                break;
+            case R.id.ec_btn_ewl:
+                break;
+            case R.id.ec_btn_ebl:
+                break;
+        }
+    }
+
+    private void guardar() {
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        setPass(getResources().getStringArray(R.array.passType)[position]);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void setPass(String cifrado){
+        switch (cifrado){
+            case Conexion.CIFRADO_ABIERTO:
+                spnCifrado.setSelection(0);
+                passLayout.setVisibility(View.INVISIBLE);
+                break;
+            case Conexion.CIFRADO_WEP:
+                spnCifrado.setSelection(1);
+                passLayout.setVisibility(View.VISIBLE);
+                break;
+            case Conexion.CIFRADO_WPA:
+                spnCifrado.setSelection(2);
+                passLayout.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    private void setDatos(Conexion c){
+        ssid.setHint(c.getSsid());
+        setPass(c.getCifrado());
+        if(!c.getCifrado().equals(Conexion.CIFRADO_ABIERTO)) {
+            pass.setHint(c.getPass());
+        }
+        cbDhcp.setChecked(!c.getDHCP());
+        if(!c.getDHCP()){
+            ip.setHint(c.getIp());
+            masc.setHint(c.getMasc());
+            puerta.setHint(c.getPuerta());
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked){
+            staticLayout.setVisibility(View.VISIBLE);
+        }else{
+            staticLayout.setVisibility(View.INVISIBLE);
+        }
     }
 }

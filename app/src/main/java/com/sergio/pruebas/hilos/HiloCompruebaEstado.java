@@ -180,9 +180,9 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         //Set to 1 for true and 0 for false.
         android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_USE_STATIC_IP, String.valueOf(c.getIDHCP()));
         if (!c.getDHCP()){
-            android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_GATEWAY, c.getPuerta().getHostAddress());
-            android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_NETMASK, c.getMasc().getHostAddress());
-            android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_IP, c.getIp().getHostAddress());
+            android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_GATEWAY, c.getPuerta());
+            android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_NETMASK, c.getMasc());
+            android.provider.Settings.System.putString(context.getContentResolver(), android.provider.Settings.System.WIFI_STATIC_IP, c.getIp());
         }
         GestionPreferencias.setActualConexionId(GestionPreferencias.getSharedPreferencesConfig(context),c.getId());
         wm.disconnect();

@@ -36,24 +36,28 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".dialogos.DialogoNuevaConexion"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@android:style/Theme.Dialog"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".dialogos.DialogoNuevaConexionConfig"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@android:style/Theme.Dialog"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".dialogos.DialogoConfirmarConexionDuplicada"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".dialogos.DialogoEditarBorrar"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".test" />
+        <activity android:name=".testa" />
 
         <service
             android:name=".servicio.ServiceWifiManager"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".EditarConexion"></activity>
+        <activity android:name=".EditarConexion"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

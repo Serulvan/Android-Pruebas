@@ -49,6 +49,9 @@ public class AdaptadorNuevaConexion extends ArrayAdapter {
         }else if (arr.get(position).capabilities.contains("IBSS")){
             datos1.setText("");
             hasPass=false;
+        }else if (arr.get(position).capabilities.contains("ESS")){
+            datos1.setText("");
+            hasPass=false;
         }else{
             datos1.setText(arr.get(position).capabilities);
             if (arr.get(position).capabilities.length()>0) {

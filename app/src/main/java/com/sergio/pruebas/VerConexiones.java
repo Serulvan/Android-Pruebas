@@ -35,10 +35,14 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ver_conexiones);
         btnAtras = (Button)findViewById(R.id.vc_btn_atras);
-        btnAtras.setOnClickListener(this);
+        if (btnAtras != null) {
+            btnAtras.setOnClickListener(this);
+        }
 
         lv = (ListView) findViewById(R.id.vc_lv);
-        lv.setOnItemClickListener(this);
+        if (lv != null) {
+            lv.setOnItemClickListener(this);
+        }
 
     }
 
@@ -53,6 +57,7 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
             lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.wifi_bar, listado));
         } catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
+            Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -64,7 +69,7 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent i = new Intent(this,DialogoEditarBorrar.class);
-        i.putExtra("id", Integer.valueOf((String)view.findViewById(R.id.ssid_list).getTag()));
+        i.putExtra("id", (int)view.findViewById(R.id.ssid_list).getTag());
         startActivityForResult(i,0);
     }
 

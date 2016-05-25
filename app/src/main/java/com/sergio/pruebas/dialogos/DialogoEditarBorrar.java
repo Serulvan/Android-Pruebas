@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.sergio.pruebas.EditarConexion;
 import com.sergio.pruebas.R;
 import com.sergio.pruebas.memoria.GestionArchivos;
-import com.sergio.pruebas.test;
 
 import org.json.JSONException;
 
