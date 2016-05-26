@@ -2,8 +2,6 @@ package com.sergio.pruebas;
 
 import android.net.wifi.WifiConfiguration;
 
-import com.sergio.pruebas.conexiones.Conexion;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.sergio.pruebas.R;
-import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.entidades.Conexion;
 
 import java.util.ArrayList;
 

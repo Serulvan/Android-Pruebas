@@ -1,17 +1,16 @@
-package com.sergio.pruebas.conexiones;
+package com.sergio.pruebas.entidades;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Conexion implements Comparator {
     private String ssid,pass, cifrado,ip,masc,puerta;
-    private ArrayList<String> whiteList, blackList;
+    private ArrayList<Mac> whiteList, blackList;
     private boolean auto;
     private int id;
     private static int currentMaxId=-1;
@@ -134,7 +133,7 @@ public class Conexion implements Comparator {
         this.puerta = puerta;
     }
 
-    public ArrayList<String> getWhiteList() {
+    public ArrayList<Mac> getWhiteList() {
         return whiteList;
     }
 
@@ -142,10 +141,10 @@ public class Conexion implements Comparator {
         if (whiteList==null){
             whiteList = new ArrayList();
         }
-        whiteList.add(mac);
+        whiteList.add(new Mac(mac));
     }
 
-    public ArrayList<String> getBlackList() {
+    public ArrayList<Mac> getBlackList() {
         return blackList;
     }
 
@@ -153,7 +152,7 @@ public class Conexion implements Comparator {
         if (blackList==null){
             blackList = new ArrayList();
         }
-        blackList.add(mac);
+        blackList.add(new Mac(mac));
     }
     @Deprecated
     public String getSDHCP(){
@@ -167,6 +166,10 @@ public class Conexion implements Comparator {
 
     public boolean getDHCP(){
         return auto;
+    }
+
+    public void setDHCP(boolean b){
+        auto=b;
     }
 
     public int getIDHCP(){
@@ -218,9 +221,25 @@ public class Conexion implements Comparator {
         return ++currentMaxId;
     }
 
-    private void rellenarList(ArrayList<String> list, JSONArray ja) throws JSONException {
+    private void rellenarList(ArrayList<Mac> list, JSONArray ja) throws JSONException {
         for (int i = 0; i < ja.length(); i++) {
-            list.add(ja.getString(i));
+            list.add(new Mac(ja.getJSONObject(i)));
         }
+    }
+
+    public void update(Conexion c){
+        ssid = c.getSsid();
+        cifrado = c.getCifrado();
+        if (!cifrado.equals(CIFRADO_ABIERTO)){
+            pass = c.getPass();
+        }
+        auto=c.getDHCP();
+        if(!auto) {
+            ip = c.getIp();
+            masc = c.getMasc();
+            puerta = c.getPuerta();
+        }
+        whiteList = c.getWhiteList();
+        blackList = c.getBlackList();
     }
 }

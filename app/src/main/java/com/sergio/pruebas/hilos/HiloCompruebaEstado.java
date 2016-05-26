@@ -4,7 +4,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,7 +15,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 
 import com.sergio.pruebas.R;
-import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.entidades.Conexion;
 import com.sergio.pruebas.memoria.GestionArchivos;
 import com.sergio.pruebas.memoria.GestionPreferencias;
 import com.sergio.pruebas.odenadores.OrdenarWifiScanPorLevel;

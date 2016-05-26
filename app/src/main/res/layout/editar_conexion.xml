@@ -125,7 +125,9 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/ec_et_ip"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:inputType="number|numberDecimal"
+                        android:digits="0123456789."/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -146,7 +148,9 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/ec_et_masc"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:inputType="number|numberDecimal"
+                        android:digits="0123456789."/>
 
                 </LinearLayout>
 
@@ -168,7 +172,9 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/ec_et_puerta"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:inputType="number|numberDecimal"
+                        android:digits="0123456789."/>
                 </LinearLayout>
             </LinearLayout>
 

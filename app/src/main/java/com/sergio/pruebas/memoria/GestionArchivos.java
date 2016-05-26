@@ -1,17 +1,13 @@
 package com.sergio.pruebas.memoria;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
-import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.entidades.Conexion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.lang.reflect.Array;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,9 +74,20 @@ public abstract class GestionArchivos {
         return null;
     }
 
+    public static void actualizarConexionPorId(Conexion c ,SharedPreferences sp) throws JSONException, UnknownHostException {
+        ArrayList<Conexion> lista = obtenerLista(sp);
+        for (int i = 0; i < lista.size(); i++) {
+            if (c.getId()==lista.get(i).getId()){
+                lista.get(i).update(c);
+                guardarLista(lista,sp);
+                return;
+            }
+        }
+    }
+
     public static boolean isOnWhiteList(String s, Conexion c){
         for (int i = 0; i < c.getWhiteList().size(); i++) {
-            if (s.equals(c.getWhiteList().get(i))){
+            if (s.equals(c.getWhiteList().get(i).getMac())){
                 return true;
             }
         }
@@ -89,7 +96,7 @@ public abstract class GestionArchivos {
 
     public static boolean isOnBlackList(String s, Conexion c){
         for (int i = 0; i < c.getBlackList().size(); i++) {
-            if (s.equals(c.getBlackList().get(i))){
+            if (s.equals(c.getBlackList().get(i).getMac())){
                 return true;
             }
         }

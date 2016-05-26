@@ -32,7 +32,9 @@
     <string name="error_ssid_vacio">El campo "SSID" no puede estar vacio.</string>
     <string name="error_ip_ipnovalida">Introduce una IP válida.</string>
     <string name="error_ip_mascnovalida">Introduce una máscara de red válida.</string>
-    <string name="error_sin_datos">No hay conexiones guardadas</string>
+    <string name="error_sin_datos">No hay conexiones guardadas.</string>
+    <string name="error_ec_nopass">Rellena el campo de contraseña.</string>
+    <string name="error_ec_static">Rellena los campos correctamente.</string>
 
     <string name="exito_red_añadida">Red añadida con éxito</string>
 
@@ -48,6 +50,7 @@
     <string name="error_pass_vacia">Introduce una contraseña o cambia de seguridad a "Abierto".</string>
     <string name="i_swbtn_on">Encendido</string>
     <string name="i_swbtn_off">Apagado</string>
+    <string name="dlm_btn_nueva">Nueva</string>
 
     <array name="passType">
         <item>Abierto</item>

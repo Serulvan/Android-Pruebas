@@ -6,7 +6,7 @@
     <uses-feature android:name="android.hardware.wifi" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
@@ -37,11 +37,11 @@
         <activity
             android:name=".dialogos.DialogoNuevaConexion"
             android:theme="@android:style/Theme.Dialog"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".dialogos.DialogoNuevaConexionConfig"
             android:theme="@android:style/Theme.Dialog"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".dialogos.DialogoConfirmarConexionDuplicada"
             android:theme="@android:style/Theme.Dialog" />
@@ -55,9 +55,15 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".EditarConexion"
+        <activity
+            android:name=".EditarConexion"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".dialogos.DialogoListaMacs"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".dialogos.DialogoNuevaMac"
+            android:theme="@android:style/Theme.Dialog" />
     </application>
 
 </manifest>

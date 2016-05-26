@@ -1,7 +1,6 @@
 package com.sergio.pruebas;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,18 +10,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.sergio.pruebas.adaptadores.AdaptadorMostrarConexiones;
-import com.sergio.pruebas.adaptadores.AdaptadorNuevaConexion;
-import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.entidades.Conexion;
 import com.sergio.pruebas.dialogos.DialogoEditarBorrar;
 import com.sergio.pruebas.memoria.GestionArchivos;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VerConexiones extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 

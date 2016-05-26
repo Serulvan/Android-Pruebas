@@ -11,12 +11,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sergio.pruebas.R;
-import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.entidades.Conexion;
 import com.sergio.pruebas.memoria.GestionArchivos;
 
 import org.json.JSONException;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class DialogoNuevaConexionConfig extends Activity implements View.OnFocusChangeListener, View.OnClickListener{

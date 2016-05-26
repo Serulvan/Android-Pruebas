@@ -2,7 +2,6 @@ package com.sergio.pruebas.dialogos;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -15,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.sergio.pruebas.R;
-import com.sergio.pruebas.conexiones.Conexion;
+import com.sergio.pruebas.entidades.Conexion;
 import com.sergio.pruebas.hilos.GestorHilos;
 import com.sergio.pruebas.memoria.GestionArchivos;
 
