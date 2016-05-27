@@ -242,4 +242,6 @@ public class Conexion implements Comparator {
         whiteList = c.getWhiteList();
         blackList = c.getBlackList();
     }
+
+
 }

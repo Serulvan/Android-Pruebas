@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.sergio.pruebas.entidades.Conexion;
+import com.sergio.pruebas.entidades.Mac;
 
 import org.json.JSONArray;
 import org.json.JSONException;

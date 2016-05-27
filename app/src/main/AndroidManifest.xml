@@ -19,6 +19,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+
         <activity
             android:name=".Inicio"
             android:screenOrientation="portrait">
@@ -28,26 +29,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".NuevaConexion"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".VerConexiones"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".dialogos.DialogoNuevaConexion"
             android:theme="@android:style/Theme.Dialog"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".dialogos.DialogoNuevaConexionConfig"
             android:theme="@android:style/Theme.Dialog"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".dialogos.DialogoConfirmarConexionDuplicada"
             android:theme="@android:style/Theme.Dialog" />
+
         <activity
             android:name=".dialogos.DialogoEditarBorrar"
             android:theme="@android:style/Theme.Dialog" />
+
         <activity android:name=".testa" />
 
         <service
@@ -59,11 +67,19 @@
             android:name=".EditarConexion"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".dialogos.DialogoListaMacs"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".dialogos.DialogoNuevaMac"
+
+        <activity
+            android:name=".dialogos.DialogoNuevaMac"
             android:theme="@android:style/Theme.Dialog" />
+
+        <activity
+            android:name=".dialogos.DialogoEditarBorrarMac"
+            android:theme="@android:style/Theme.Dialog"/>
+
     </application>
 
 </manifest>
