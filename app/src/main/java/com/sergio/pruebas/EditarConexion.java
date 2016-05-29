@@ -84,17 +84,15 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
             case R.id.ec_btn_salir:
                 finish();
                 break;
-            case R.id.ec_btn_ewl:
+            case R.id.ec_btn_ewl: case R.id.ec_btn_ebl:
                 Intent i = new Intent(this, DialogoListaMacs.class);
                 i.putExtra("id",c.getId());
-                i.putExtra("lista","w");//white
+                if (v.getId()==R.id.ec_btn_ewl){
+                    i.putExtra("lista",Conexion.WHITE);//white
+                }else {
+                    i.putExtra("lista", Conexion.BlACK);//black
+                }
                 startActivity(i);
-                break;
-            case R.id.ec_btn_ebl:
-                Intent j = new Intent(this, DialogoListaMacs.class);
-                j.putExtra("id",c.getId());
-                j.putExtra("lista","b");//black
-                startActivity(j);
                 break;
         }
     }

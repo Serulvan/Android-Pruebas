@@ -37,4 +37,11 @@ public class Mac {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+
+    public JSONObject toJsonObjet() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("mac",mac);
+        jo.put("fecha",fecha);
+        return jo;
+    }
 }

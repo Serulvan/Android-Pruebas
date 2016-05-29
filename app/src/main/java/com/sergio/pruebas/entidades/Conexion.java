@@ -17,7 +17,9 @@ public class Conexion implements Comparator {
     public static final String CIFRADO_ABIERTO = "Abierto";
     public static final String CIFRADO_WEP = "WEP";
     public static final String CIFRADO_WPA = "WPA/WPA2 PSK";
-    public static final String CIFRADO_IEEE80XX = "";
+    //public static final String CIFRADO_IEEE80XX = "";
+    public static final String WHITE = "w";
+    public static final String BlACK = "b";
 
     public Conexion() {
         //solo se usa para ordenar con el sort
@@ -139,7 +141,7 @@ public class Conexion implements Comparator {
 
     public void addWhiteListMac(String mac) {
         if (whiteList==null){
-            whiteList = new ArrayList();
+            whiteList = new ArrayList<>();
         }
         whiteList.add(new Mac(mac));
     }
@@ -150,10 +152,53 @@ public class Conexion implements Comparator {
 
     public void addBlackListMac(String mac) {
         if (blackList==null){
-            blackList = new ArrayList();
+            blackList = new ArrayList<>();
         }
         blackList.add(new Mac(mac));
     }
+
+    public void borrarMacPorFecha (String fecha, String lista){
+        switch (lista){
+            case WHITE:
+                for (Mac mac : whiteList) {
+                    if (mac.getFecha().equals(fecha)){
+                        whiteList.remove(mac);
+                        return;
+                    }
+                }
+                break;
+            case BlACK:
+                for (Mac mac : blackList) {
+                    if (mac.getFecha().equals(fecha)){
+                        blackList.remove(mac);
+                        return;
+                    }
+                }
+                break;
+        }
+    }
+
+    public void modificarMacPorFecha (String fecha, String sMac, String lista){
+        switch (lista){
+            case WHITE:
+                for (Mac mac : whiteList) {
+                    if (mac.getFecha().equals(fecha)){
+                        mac.setMac(sMac);
+                        return;
+                    }
+                }
+                break;
+            case BlACK:
+                for (Mac mac : blackList) {
+                    if (mac.getFecha().equals(fecha)){
+                        mac.setMac(sMac);
+                        return;
+                    }
+                }
+                break;
+        }
+    }
+
     @Deprecated
     public String getSDHCP(){
         if (auto) {
@@ -191,12 +236,6 @@ public class Conexion implements Comparator {
         return --i;
     }
 
-    @Override
-    public int compare(Object lhs, Object rhs) {
-        //ordenar por ssid
-        return ((Conexion)lhs).getSsid().compareTo(((Conexion) rhs).getSsid());
-    }
-
     public JSONObject toJsonObject() throws JSONException {
         JSONObject jo = new JSONObject();
         jo.put("ssid",ssid);
@@ -212,8 +251,16 @@ public class Conexion implements Comparator {
             jo.put("masc", masc);
             jo.put("puerta", puerta);
         }
-        jo.put("whiteList",whiteList);
-        jo.put("blackList",blackList);
+        JSONArray ja = new JSONArray();
+        for (int i = 0; i < whiteList.size(); i++) {
+            ja.put(whiteList.get(i).toJsonObjet());
+        }
+        jo.put("whiteList",ja);
+        ja = new JSONArray();
+        for (int i = 0; i < whiteList.size(); i++) {
+            ja.put(whiteList.get(i).toJsonObjet());
+        }
+        jo.put("blackList",ja);
         return jo;
     }
 
@@ -241,6 +288,12 @@ public class Conexion implements Comparator {
         }
         whiteList = c.getWhiteList();
         blackList = c.getBlackList();
+    }
+
+    @Override
+    public int compare(Object lhs, Object rhs) {
+        //ordenar por ssid
+        return ((Conexion)lhs).getSsid().compareTo(((Conexion) rhs).getSsid());
     }
 
 

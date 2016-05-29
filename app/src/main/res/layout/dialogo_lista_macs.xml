@@ -10,20 +10,21 @@
     tools:context="com.sergio.pruebas.dialogos.DialogoListaMacs"
     android:orientation="vertical">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/dlm_lv"
-        android:layout_weight="1"
-        android:layout_gravity="top" />
-
     <Button
     style="?android:attr/buttonStyleSmall"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:text="@string/dlm_btn_nueva"
     android:id="@+id/dlm_btn_nueva"
-    android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal" />
+    android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dlm_lv"
+        android:layout_weight="1"
+        android:layout_gravity="top" />
 
 </LinearLayout>
