@@ -257,8 +257,8 @@ public class Conexion implements Comparator {
         }
         jo.put("whiteList",ja);
         ja = new JSONArray();
-        for (int i = 0; i < whiteList.size(); i++) {
-            ja.put(whiteList.get(i).toJsonObjet());
+        for (int i = 0; i < blackList.size(); i++) {
+            ja.put(blackList.get(i).toJsonObjet());
         }
         jo.put("blackList",ja);
         return jo;

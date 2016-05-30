@@ -1,6 +1,7 @@
 package com.sergio.pruebas;
 
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,12 +30,11 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
     private Spinner spnCifrado;
     private CheckBox cbDhcp;
     private Button  editWitheList, editBlackList, salir, guardar;
-
+    private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editar_conexion);
-        int id = getIntent().getIntExtra("id",-1);
 
         ssid = (EditText) findViewById(R.id.ec_et_ssid);
         pass = (EditText) findViewById(R.id.ec_et_pass);
@@ -60,6 +60,12 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
         editBlackList.setOnClickListener(this);
         salir.setOnClickListener(this);
         guardar.setOnClickListener(this);
+        id = getIntent().getIntExtra("id",-1);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         if (id==-1){
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
         }else{
@@ -92,7 +98,7 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
                 }else {
                     i.putExtra("lista", Conexion.BlACK);//black
                 }
-                startActivity(i);
+                startActivityForResult(i,0);
                 break;
         }
     }
@@ -248,6 +254,15 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
             staticLayout.setVisibility(View.VISIBLE);
         }else{
             staticLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK) {
+            id = data.getIntExtra("id", -1);
+            onStart();
         }
     }
 }

@@ -58,18 +58,16 @@ public class DialogoListaMacs extends Activity implements View.OnClickListener, 
         if (c!=null) {
             switch (lista) {
                 case Conexion.WHITE:
-                    if (c.getWhiteList().size() != 0) {
-                        lv.setAdapter(new AdaptadorMostrarMac(this, R.layout.mac_bar, c.getWhiteList()));
-                    } else {
+                    if (c.getWhiteList().size() == 0) {
                         Toast.makeText(this, R.string.error_sin_datos, Toast.LENGTH_SHORT).show();
                     }
+                    lv.setAdapter(new AdaptadorMostrarMac(this, R.layout.mac_bar, c.getWhiteList()));
                     break;
                 case Conexion.BlACK:
-                    if (c.getBlackList().size() != 0) {
-                        lv.setAdapter(new AdaptadorMostrarMac(this, R.layout.mac_bar, c.getBlackList()));
-                    } else {
+                    if (c.getBlackList().size() == 0) {
                         Toast.makeText(this, R.string.error_sin_datos, Toast.LENGTH_SHORT).show();
                     }
+                    lv.setAdapter(new AdaptadorMostrarMac(this, R.layout.mac_bar, c.getBlackList()));
                     break;
             }
         }
@@ -80,52 +78,72 @@ public class DialogoListaMacs extends Activity implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         Intent i = new Intent(this, DialogoNuevaMac.class);
+        i.putExtra("id",id);
+        i.putExtra("lista",lista);
         startActivityForResult(i,0);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent i = new Intent(this, DialogoEditarBorrar.class);
+        Intent i = new Intent(this, DialogoEditarBorrarMac.class);
         i.putExtra("fecha",((TextView)view.findViewById(R.id.mb_fecha)).getText());
         i.putExtra("mac",((TextView)view.findViewById(R.id.mb_mac)).getText());
+        i.putExtra("id",this.id);
+        i.putExtra("lista",lista);
         startActivityForResult(i,1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case 0:
-                //nueva mac
-                switch (lista) {
-                    case Conexion.WHITE:
-                        c.addWhiteListMac(data.getStringExtra("mac"));
-                        break;
-                    case Conexion.BlACK:
-                        c.addBlackListMac(data.getStringExtra("mac"));
-                        break;
-                }
-                break;
-            case 1:
-                //editar borrar mac
-                switch (data.getIntExtra("accion",-1)){
-                    case 0:
-                        //borrar
-                        c.borrarMacPorFecha(data.getStringExtra("fecha"),lista);
-                        break;
-                    case 1:
-                        //modificar
-                        c.modificarMacPorFecha(data.getStringExtra("fecha"),data.getStringExtra("mac"),lista);
-                        break;
-                }
-                break;
+        if (resultCode==RESULT_OK) {
+            id = data.getIntExtra("id", -1);
+            lista = data.getStringExtra("lista");
+            switch (requestCode) {
+                case 0:
+                    //nueva mac
+                    switch (lista) {
+                        case Conexion.WHITE:
+                            c.addWhiteListMac(data.getStringExtra("mac"));
+                            break;
+                        case Conexion.BlACK:
+                            c.addBlackListMac(data.getStringExtra("mac"));
+                            break;
+                    }
+                    break;
+                case 1:
+                    //editar borrar mac
+                    switch (data.getIntExtra("accion", -1)) {
+                        case 0:
+                            //borrar
+                            c.borrarMacPorFecha(data.getStringExtra("fecha"), lista);
+                            break;
+                        case 1:
+                            //modificar
+                            c.modificarMacPorFecha(data.getStringExtra("fecha"), data.getStringExtra("mac"), lista);
+                            break;
+                    }
+                    break;
+            }
+            //guardar cambios
+            try {
+                GestionArchivos.actualizarConexionPorId(c, GestionArchivos.getSharedPreferencesListado(this));
+            } catch (JSONException | UnknownHostException e) {
+                e.printStackTrace();
+            }
+            onStart();
         }
-        //guardar cambios
-        try {
-            GestionArchivos.actualizarConexionPorId(c,GestionArchivos.getSharedPreferencesListado(this));
-        } catch (JSONException | UnknownHostException e) {
-            e.printStackTrace();
-        }
-        onStart();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
+        //super.onBackPressed();
+        Intent i = new Intent();
+        i.putExtra("id",id);
+        i.putExtra("lista",lista);
+        setResult(RESULT_OK,i);
+        finish();
+
     }
 }

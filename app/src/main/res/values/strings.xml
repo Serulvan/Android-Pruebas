@@ -35,7 +35,7 @@
     <string name="error_sin_datos">No hay conexiones guardadas.</string>
     <string name="error_ec_nopass">Rellena el campo de contraseña.</string>
     <string name="error_ec_static">Rellena los campos correctamente.</string>
-    <string name="error_mac">Rellena los campos correctamente.</string>
+    <string name="error_mac">Introduce una dirección mac válida.</string>
 
     <string name="exito_red_añadida">Red añadida con éxito</string>
 

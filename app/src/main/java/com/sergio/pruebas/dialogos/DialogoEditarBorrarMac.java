@@ -11,7 +11,9 @@ import com.sergio.pruebas.R;
 
 public class DialogoEditarBorrarMac extends Activity implements View.OnClickListener {
 
-    Button btnDel, btnEdit;
+    private Button btnDel, btnEdit;
+    private int id;
+    private String lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,8 @@ public class DialogoEditarBorrarMac extends Activity implements View.OnClickList
         if (btnEdit != null) {
             btnEdit.setOnClickListener(this);
         }
+        id=getIntent().getIntExtra("id",-1);
+        lista= getIntent().getStringExtra("lista");
     }
 
     @Override
@@ -36,12 +40,16 @@ public class DialogoEditarBorrarMac extends Activity implements View.OnClickList
             Intent i = new Intent(this,DialogoNuevaMac.class);
             i.putExtra("mac",getIntent().getStringExtra("mac"));
             i.putExtra("fecha",getIntent().getStringExtra("fecha"));
+            i.putExtra("id",id);
+            i.putExtra("lista",lista);
             startActivityForResult(i,0);
         }else{
             Intent i = new Intent();
             i.putExtra("id",getIntent().getIntExtra("id",-1));
             i.putExtra("fecha",getIntent().getStringExtra("fecha"));
             i.putExtra("accion",0);
+            i.putExtra("id",id);
+            i.putExtra("lista",lista);
             cerrarDEBM(RESULT_OK,i);
         }
     }
@@ -49,11 +57,17 @@ public class DialogoEditarBorrarMac extends Activity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent i = new Intent();
-        i.putExtra("mac",data.getStringExtra("mac"));
-        i.putExtra("fecha",data.getStringExtra("fecha"));
-        i.putExtra("action",1);
-        cerrarDEBM(RESULT_OK,i);
+        if (resultCode==RESULT_OK) {
+            Intent i = new Intent();
+            i.putExtra("mac", data.getStringExtra("mac"));
+            i.putExtra("fecha", data.getStringExtra("fecha"));
+            i.putExtra("accion", 1);
+            id = data.getIntExtra("id", -1);
+            lista = data.getStringExtra("lista");
+            i.putExtra("id", id);
+            i.putExtra("lista", lista);
+            cerrarDEBM(RESULT_OK, i);
+        }
     }
 
     public void cerrarDEBM(int result, Intent i){

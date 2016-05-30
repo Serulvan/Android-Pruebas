@@ -17,13 +17,15 @@ public class DialogoNuevaMac extends Activity implements View.OnClickListener {
 
     private EditText etMac;
     private String fecha;
+    private int id;
+    private String lista, mac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialogo_nueva_mac);
-        String mac = getIntent().getStringExtra("mac");
+        mac = getIntent().getStringExtra("mac");
         fecha = getIntent().getStringExtra("fecha");
 
         etMac= (EditText) findViewById(R.id.dnm_et_mac);
@@ -35,16 +37,20 @@ public class DialogoNuevaMac extends Activity implements View.OnClickListener {
         if (btnOk != null) {
             btnOk.setOnClickListener(this);
         }
+        id=getIntent().getIntExtra("id",-1);
+        lista= getIntent().getStringExtra("lista");
     }
 
     @Override
     public void onClick(View v) {
         Intent i = new Intent();
+        i.putExtra("id",this.id);
+        i.putExtra("lista",lista);
         if (comprobarMac(etMac.getText().toString().trim())){
-            i.putExtra("mac",etMac.getText().toString().trim());
+            i.putExtra("mac",formatearMac(etMac.getText().toString().trim()));
             i.putExtra("fecha",fecha);
             cerrarDNM(RESULT_OK,i);
-        }else if (etMac.getText().toString().trim().length()==0){
+        }else if (etMac.getText().toString().trim().isEmpty() && etMac.getHint()!=null){
             i.putExtra("mac",etMac.getHint().toString());
             i.putExtra("fecha",fecha);
             cerrarDNM(RESULT_OK,i);
@@ -59,7 +65,18 @@ public class DialogoNuevaMac extends Activity implements View.OnClickListener {
     }
 
     private boolean comprobarMac(String mac){
-        Pattern p = Pattern.compile("^(([0-9A-Fa-f]{2})(:|-))*([0-9A-Fa-f]{2})$");
+        Pattern p = Pattern.compile("^(([0-9A-Fa-f]{2})(:|-)?)*([0-9A-Fa-f]{2})$");
         return p.matcher(mac).matches();
+    }
+
+    private String formatearMac(String mac){
+        mac = mac.replace(":","");
+        mac = mac.replace("-","");
+        String macs[] = mac.split("(?=(?:..)*$)");
+        mac=macs[0];
+        for (int i = 1; i < macs.length; i++) {
+            mac+=":"+macs[i];
+        }
+        return mac;
     }
 }
