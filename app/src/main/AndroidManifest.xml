@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -19,7 +20,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-
         <activity
             android:name=".Inicio"
             android:screenOrientation="portrait">
@@ -29,34 +29,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".NuevaConexion"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".VerConexiones"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".dialogos.DialogoNuevaConexion"
             android:theme="@android:style/Theme.Dialog"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".dialogos.DialogoNuevaConexionConfig"
             android:theme="@android:style/Theme.Dialog"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".dialogos.DialogoConfirmarConexionDuplicada"
             android:theme="@android:style/Theme.Dialog" />
-
         <activity
             android:name=".dialogos.DialogoEditarBorrar"
             android:theme="@android:style/Theme.Dialog" />
-
-        <activity android:name=".testa" />
 
         <service
             android:name=".servicio.ServiceWifiManager"
@@ -67,19 +59,27 @@
             android:name=".EditarConexion"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".dialogos.DialogoListaMacs"
             android:theme="@android:style/Theme.Dialog" />
-
         <activity
             android:name=".dialogos.DialogoNuevaMac"
             android:theme="@android:style/Theme.Dialog" />
-
         <activity
             android:name=".dialogos.DialogoEditarBorrarMac"
-            android:theme="@android:style/Theme.Dialog"/>
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".dialogos.DialogoConfiguracion"
+            android:theme="@android:style/Theme.Dialog" />
 
+        <receiver
+            android:name=".receivers.WifiManagerReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

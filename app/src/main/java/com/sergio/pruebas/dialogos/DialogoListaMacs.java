@@ -19,7 +19,6 @@ import com.sergio.pruebas.memoria.GestionArchivos;
 import org.json.JSONException;
 
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 public class DialogoListaMacs extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -61,13 +60,13 @@ public class DialogoListaMacs extends Activity implements View.OnClickListener, 
                     if (c.getWhiteList().size() == 0) {
                         Toast.makeText(this, R.string.error_sin_datos, Toast.LENGTH_SHORT).show();
                     }
-                    lv.setAdapter(new AdaptadorMostrarMac(this, R.layout.mac_bar, c.getWhiteList()));
+                    lv.setAdapter(new AdaptadorMostrarMac(this, R.layout.layout_bar_mac, c.getWhiteList()));
                     break;
                 case Conexion.BlACK:
                     if (c.getBlackList().size() == 0) {
                         Toast.makeText(this, R.string.error_sin_datos, Toast.LENGTH_SHORT).show();
                     }
-                    lv.setAdapter(new AdaptadorMostrarMac(this, R.layout.mac_bar, c.getBlackList()));
+                    lv.setAdapter(new AdaptadorMostrarMac(this, R.layout.layout_bar_mac, c.getBlackList()));
                     break;
             }
         }

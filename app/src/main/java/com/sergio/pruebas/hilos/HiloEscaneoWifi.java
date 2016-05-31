@@ -38,7 +38,7 @@ public class HiloEscaneoWifi extends AsyncTask<Void,Integer,Void> {
                 case 1:
                     List scanResults = wm.getScanResults();
                     Collections.sort(scanResults, new OrdenarWifiScanPorLevel());
-                    lv.setAdapter(new AdaptadorNuevaConexion(activity, R.layout.wifi_bar, scanResults));
+                    lv.setAdapter(new AdaptadorNuevaConexion(activity, R.layout.layout_bar_wifi, scanResults));
                     break;
             }
         }

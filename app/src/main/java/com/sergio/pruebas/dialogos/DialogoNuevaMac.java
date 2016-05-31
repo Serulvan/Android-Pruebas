@@ -73,10 +73,11 @@ public class DialogoNuevaMac extends Activity implements View.OnClickListener {
         mac = mac.replace(":","");
         mac = mac.replace("-","");
         String macs[] = mac.split("(?=(?:..)*$)");
-        mac=macs[0];
+        mac="";
         for (int i = 1; i < macs.length; i++) {
             mac+=":"+macs[i];
         }
+        mac=mac.replaceFirst("^:","");
         return mac;
     }
 }

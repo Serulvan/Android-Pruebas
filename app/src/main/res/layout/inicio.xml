@@ -57,4 +57,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="46dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/i_btn_config"
+        android:id="@+id/btnconf" />
+
 </RelativeLayout>

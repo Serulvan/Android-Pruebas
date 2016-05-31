@@ -49,7 +49,7 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
             if(listado.isEmpty()) {
                 Toast.makeText(this,R.string.error_sin_datos,Toast.LENGTH_LONG).show();
             }
-            lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.wifi_bar, listado));
+            lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.layout_bar_wifi, listado));
         } catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
             Toast.makeText(this, "error", Toast.LENGTH_LONG).show();

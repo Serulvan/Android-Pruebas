@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Pruebas</string>
+    <string name="app_name">Wifi Config Manager</string>
     <string name="addredbtn">AÑADIR RED</string>
     <string name="gestredbtn">GESTIONAR REDES</string>
+    <string name="i_btn_config">CONFIGURACIÓN</string>
     <string name="ocultarswbtn">OCULTAR</string>
     <string name="mostrarswbtn">MOSTRAR</string>
     <string name="nc_btn_avanzado">AVANZADO</string>
@@ -36,6 +37,8 @@
     <string name="error_ec_nopass">Rellena el campo de contraseña.</string>
     <string name="error_ec_static">Rellena los campos correctamente.</string>
     <string name="error_mac">Introduce una dirección mac válida.</string>
+    <string name="error_campos_vacios">Rellena todos los campos.</string>
+    <string name="error_pass_vacia">Introduce una contraseña o cambia de seguridad a "Abierto".</string>
 
     <string name="exito_red_añadida">Red añadida con éxito</string>
 
@@ -47,11 +50,14 @@
     <string name="notificacion_cuerpo">Conectado a </string>
     <string name="pass_seguridad">SEGURIDAD</string>
 
-    <string name="error_campos_vacios">Rellena todos los campos.</string>
-    <string name="error_pass_vacia">Introduce una contraseña o cambia de seguridad a "Abierto".</string>
+
     <string name="i_swbtn_on">Encendido</string>
     <string name="i_swbtn_off">Apagado</string>
     <string name="dlm_btn_nueva">Nueva</string>
+
+    <string name="dc_tv_notificacion">Notificacón:</string>
+    <string name="dc_cb_vib">Vibración</string>
+    <string name="dc_cb_son">Sonido</string>
 
     <array name="passType">
         <item>Abierto</item>

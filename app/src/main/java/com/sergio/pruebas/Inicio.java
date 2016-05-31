@@ -10,13 +10,14 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.sergio.pruebas.dialogos.DialogoConfiguracion;
 import com.sergio.pruebas.memoria.GestionArchivos;
 import com.sergio.pruebas.memoria.GestionPreferencias;
 import com.sergio.pruebas.servicio.ServiceWifiManager;
 
 public class Inicio extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private Button btnAdd, btnGest, del, ver;
+    private Button btnAdd, btnGest, del, ver, btnConfig;
     private ToggleButton stateServiceTbtn;
 
     @Override
@@ -25,6 +26,7 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, C
         setContentView(R.layout.inicio);
         btnAdd=(Button)findViewById(R.id.btnadd);
         btnGest=(Button)findViewById(R.id.btngest);
+        btnConfig=(Button)findViewById(R.id.btnconf);
         del=(Button)findViewById(R.id.del);
         ver=(Button)findViewById(R.id.ver);
 
@@ -32,6 +34,7 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, C
         btnGest.setOnClickListener(this);
         del.setOnClickListener(this);
         ver.setOnClickListener(this);
+        btnConfig.setOnClickListener(this);
 
         stateServiceTbtn = (ToggleButton)findViewById(R.id.tbserv);
         stateServiceTbtn.setChecked(GestionPreferencias.getConfigServActivo(GestionPreferencias.getSharedPreferencesConfig(this)));
@@ -50,6 +53,9 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, C
             GestionArchivos.getSharedPreferencesListado(this).edit().clear().commit();
         }else if(v.getId()==ver.getId()){
             Toast.makeText(this, getSharedPreferences("$$listado", MODE_PRIVATE).getString("$jList", ""), Toast.LENGTH_LONG).show();
+        }else if(v.getId()==btnConfig.getId()){
+            Intent i = new Intent(this, DialogoConfiguracion.class);
+            startActivity(i);
         }
     }
 
