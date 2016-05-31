@@ -11,17 +11,15 @@ import com.sergio.pruebas.R;
 import com.sergio.pruebas.entidades.Conexion;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AdaptadorMostrarConexiones extends ArrayAdapter {
-    private Context c;
     private ArrayList<Conexion> arr;
     private int view;
     public AdaptadorMostrarConexiones(Context context, int resource, ArrayList<Conexion> objects) {
         super(context, resource, objects);
-        c=context;
         arr=objects;
         view=resource;
-
     }
 
     @Override

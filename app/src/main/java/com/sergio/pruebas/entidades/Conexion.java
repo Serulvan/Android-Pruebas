@@ -199,16 +199,6 @@ public class Conexion implements Comparator {
         }
     }
 
-    @Deprecated
-    public String getSDHCP(){
-        if (auto) {
-            return "DHCP";
-        }
-        else {
-            return "STATIC";
-        }
-    }
-
     public boolean getDHCP(){
         return auto;
     }
@@ -223,17 +213,6 @@ public class Conexion implements Comparator {
         }else {
             return 0;
         }
-    }
-    @Deprecated
-    public int getPrefijoRed(){
-        String sa[] = masc.split("\\.");
-        String s = Integer.toBinaryString(Integer.parseInt(sa[0]))+
-                Integer.toBinaryString(Integer.parseInt(sa[1]))+
-                Integer.toBinaryString(Integer.parseInt(sa[2]))+
-                Integer.toBinaryString(Integer.parseInt(sa[3]))+'0';
-        int i=0;
-        while (s.charAt(i++)=='1'&&i<s.length());
-        return --i;
     }
 
     public JSONObject toJsonObject() throws JSONException {

@@ -70,7 +70,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
         try {
-            WifiManager wm = (WifiManager) context.getSystemService(context.WIFI_SERVICE);
+            WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             if (checkLink(wm)) {
                 ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 if (hasActiveNetConextion(cm)) {//hay conexion?
@@ -228,7 +228,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
             urlc.setConnectTimeout(1500);
             urlc.connect();
             return (urlc.getResponseCode() == 200);
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
         return false;
     }
 }

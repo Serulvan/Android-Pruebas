@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.sergio.pruebas.entidades.Conexion;
-import com.sergio.pruebas.entidades.Mac;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +15,7 @@ import java.util.Collections;
 public abstract class GestionArchivos {
 
     public static SharedPreferences getSharedPreferencesListado(Context c){
-        return c.getSharedPreferences("$$listado", c.MODE_PRIVATE);
+        return c.getSharedPreferences("$$listado", Context.MODE_PRIVATE);
     }
 
     public static void añadirRed(Conexion c, SharedPreferences sp) throws JSONException, UnknownHostException {

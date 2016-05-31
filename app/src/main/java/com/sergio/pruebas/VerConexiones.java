@@ -52,7 +52,6 @@ public class VerConexiones extends AppCompatActivity implements View.OnClickList
             lv.setAdapter(new AdaptadorMostrarConexiones(this, R.layout.layout_bar_wifi, listado));
         } catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
-            Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
         }
     }
 

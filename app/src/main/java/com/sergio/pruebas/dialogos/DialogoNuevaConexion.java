@@ -27,7 +27,6 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
     private EditText ssid, pass;
     private Button btnCancel, btnContin;
     private CheckBox cbAvanzado;
-    private LinearLayout spll;
     private Spinner spn;
 
     @Override
@@ -38,7 +37,7 @@ public class DialogoNuevaConexion extends Activity implements View.OnClickListen
         ssid=(EditText)findViewById(R.id.dnc_ssid);
         pass=(EditText)findViewById(R.id.dnc_pass);
         ssid.setText(getIntent().getStringExtra("ssid"));
-        spll=(LinearLayout)findViewById(R.id.dnc_ll_spl);
+        LinearLayout spll = (LinearLayout) findViewById(R.id.dnc_ll_spl);
         spn = (Spinner)findViewById(R.id.dnc_spn_seguridad);
         spn.setOnItemSelectedListener(this);
         String typePass = getIntent().getStringExtra("pass");

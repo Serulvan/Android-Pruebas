@@ -12,7 +12,6 @@ import com.sergio.pruebas.R;
 
 public class DialogoConfirmarConexionDuplicada extends Activity implements View.OnClickListener {
 
-    private TextView mensaje;
     private Button acep, canc;
 
     @Override
@@ -23,7 +22,7 @@ public class DialogoConfirmarConexionDuplicada extends Activity implements View.
 
         acep = (Button)findViewById(R.id.dccd_btn_aceptar);
         canc = (Button)findViewById(R.id.dccd_btn_cancel);
-        mensaje = (TextView)findViewById(R.id.dccd_tv);
+        TextView mensaje = (TextView) findViewById(R.id.dccd_tv);
         String text = getIntent().getStringExtra("ssid")+ " " +getResources().getString(R.string.alerta_red_existente);
         mensaje.setText(text);
         acep.setOnClickListener(this);

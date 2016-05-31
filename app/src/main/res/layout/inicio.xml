@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,60 +7,48 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.sergio.pruebas.Inicio">
+    tools:context="com.sergio.pruebas.Inicio"
+    android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/addredbtn"
-        android:id="@+id/btnadd"
-        android:layout_above="@+id/btngest"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="120dp" />
+        android:layout_gravity="center">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/gestredbtn"
-        android:id="@+id/btngest"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/addredbtn"
+            android:id="@+id/btnadd"
+            android:layout_margin="10dp"
+            android:layout_gravity="center" />
 
-    <ToggleButton
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/tbserv"
-        android:layout_below="@+id/btngest"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
-        android:checked="false"
-        android:textOn="@string/i_swbtn_on"
-        android:textOff="@string/i_swbtn_off" />
+        <Button
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gestredbtn"
+            android:id="@+id/btngest"
+            android:layout_margin="10dp"
+            android:layout_gravity="center" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="limpiar shared"
-        android:id="@+id/del"
-        android:layout_below="@+id/btngest"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp" />
+        <Button
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/i_btn_config"
+            android:id="@+id/btnconf"
+            android:layout_margin="10dp"
+            android:layout_gravity="center" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ver shared"
-        android:id="@+id/ver"
-        android:layout_above="@+id/btngest"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="46dp" />
+        <ToggleButton
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tbserv"
+            android:checked="false"
+            android:textOn="@string/i_swbtn_on"
+            android:textOff="@string/i_swbtn_off"
+            android:layout_margin="10dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/i_btn_config"
-        android:id="@+id/btnconf" />
-
-</RelativeLayout>
+</LinearLayout>

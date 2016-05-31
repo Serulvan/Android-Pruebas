@@ -5,9 +5,9 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.sergio.pruebas"
+        applicationId "com.sergio.wifiManager"
         minSdkVersion 10
-        targetSdkVersion 23
+        targetSdkVersion 10
         versionCode 1
         versionName "1.0"
     }

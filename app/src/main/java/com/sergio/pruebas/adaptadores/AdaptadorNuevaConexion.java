@@ -11,18 +11,15 @@ import android.widget.TextView;
 
 import com.sergio.pruebas.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 
 public class AdaptadorNuevaConexion extends ArrayAdapter {
-    private Context c;
     private List<ScanResult> arr;
     private int view;
     public AdaptadorNuevaConexion(Context context, int resource, List<ScanResult> objects) {
         super(context, resource, objects);
-        c=context;
         arr=objects;
         view=resource;
 
@@ -39,7 +36,7 @@ public class AdaptadorNuevaConexion extends ArrayAdapter {
         TextView ssid = (TextView)item.findViewById(R.id.ssid_list);
         ssid.setText(arr.get(position).SSID);
         TextView datos1 = (TextView)item.findViewById(R.id.datos1);
-        boolean hasPass=false;
+        boolean hasPass;
         if (arr.get(position).capabilities.contains("WPA")) {
             datos1.setText("WPA/WPA2 PSK");
             hasPass=true;
@@ -54,11 +51,7 @@ public class AdaptadorNuevaConexion extends ArrayAdapter {
             hasPass=false;
         }else{
             datos1.setText(arr.get(position).capabilities);
-            if (arr.get(position).capabilities.length()>0) {
-                hasPass = true;
-            }else{
-                hasPass=false;
-            }
+            hasPass = arr.get(position).capabilities.length() > 0;
         }
 
         //TextView datos2 = (TextView)item.findViewById(R.id.datos2);

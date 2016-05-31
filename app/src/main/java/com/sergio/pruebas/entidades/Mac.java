@@ -5,9 +5,6 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
-/**
- * Created by Sergio on 26/05/2016.
- */
 public class Mac {
     private String mac, fecha;
 
@@ -32,10 +29,6 @@ public class Mac {
 
     public String getFecha() {
         return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
     }
 
     public JSONObject toJsonObjet() throws JSONException {

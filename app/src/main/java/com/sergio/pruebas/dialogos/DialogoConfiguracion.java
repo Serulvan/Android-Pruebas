@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.sergio.pruebas.R;
-import com.sergio.pruebas.memoria.GestionArchivos;
 import com.sergio.pruebas.memoria.GestionPreferencias;
 
 public class DialogoConfiguracion extends Activity implements CompoundButton.OnCheckedChangeListener {

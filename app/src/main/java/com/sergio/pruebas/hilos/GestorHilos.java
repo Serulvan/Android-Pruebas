@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.net.wifi.WifiManager;
 import android.widget.ListView;
 
-import com.sergio.pruebas.hilos.HiloEscaneoWifi;
-
 public abstract class GestorHilos {
     private static HiloEscaneoWifi hew;
 

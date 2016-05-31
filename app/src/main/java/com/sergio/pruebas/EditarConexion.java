@@ -1,7 +1,6 @@
 package com.sergio.pruebas;
 
 import android.content.Intent;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,8 +28,8 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
     private LinearLayout passLayout, staticLayout;
     private Spinner spnCifrado;
     private CheckBox cbDhcp;
-    private Button  editWitheList, editBlackList, salir, guardar;
     private int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,20 +45,32 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
         staticLayout = (LinearLayout) findViewById(R.id.ec_layout_static);
 
         spnCifrado = (Spinner) findViewById(R.id.ec_spn);
-        spnCifrado.setOnItemSelectedListener(this);
+        if (spnCifrado != null) {
+            spnCifrado.setOnItemSelectedListener(this);
+        }
 
         cbDhcp = (CheckBox) findViewById(R.id.ec_cb);
-        cbDhcp.setOnCheckedChangeListener(this);
+        if (cbDhcp != null) {
+            cbDhcp.setOnCheckedChangeListener(this);
+        }
 
-        editWitheList = (Button) findViewById(R.id.ec_btn_ewl);
-        editBlackList = (Button) findViewById(R.id.ec_btn_ebl);
-        salir = (Button) findViewById(R.id.ec_btn_salir);
-        guardar = (Button) findViewById(R.id.ec_btn_guardar);
+        Button editWitheList = (Button) findViewById(R.id.ec_btn_ewl);
+        Button editBlackList = (Button) findViewById(R.id.ec_btn_ebl);
+        Button salir = (Button) findViewById(R.id.ec_btn_salir);
+        Button guardar = (Button) findViewById(R.id.ec_btn_guardar);
 
-        editWitheList.setOnClickListener(this);
-        editBlackList.setOnClickListener(this);
-        salir.setOnClickListener(this);
-        guardar.setOnClickListener(this);
+        if (editWitheList != null) {
+            editWitheList.setOnClickListener(this);
+        }
+        if (editBlackList != null) {
+            editBlackList.setOnClickListener(this);
+        }
+        if (salir != null) {
+            salir.setOnClickListener(this);
+        }
+        if (guardar != null) {
+            guardar.setOnClickListener(this);
+        }
         id = getIntent().getIntExtra("id",-1);
     }
 

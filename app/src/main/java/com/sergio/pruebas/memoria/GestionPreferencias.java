@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public abstract class GestionPreferencias {
     public static SharedPreferences getSharedPreferencesConfig(Context c){
-        return c.getSharedPreferences("$$configuracion", c.MODE_PRIVATE);
+        return c.getSharedPreferences("$$configuracion", Context.MODE_PRIVATE);
     }
 
     public static void guardarConfiguracion(SharedPreferences sp, boolean vibracion, boolean sonido, boolean servicio, int id){

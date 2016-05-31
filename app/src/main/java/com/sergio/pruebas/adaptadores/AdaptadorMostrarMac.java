@@ -14,13 +14,11 @@ import java.util.ArrayList;
 
 public class AdaptadorMostrarMac extends ArrayAdapter {
 
-    private Context c;
     private int resource;
     private ArrayList<Mac> mac;
 
     public AdaptadorMostrarMac(Context context, int resource, ArrayList<Mac> mac) {
         super(context, resource, mac);
-        c=context;
         this.resource=resource;
         this.mac=mac;
     }
