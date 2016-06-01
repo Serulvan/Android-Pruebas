@@ -49,6 +49,7 @@
             android:textOff="@string/i_swbtn_off"
             android:layout_margin="10dp"
             android:layout_gravity="center" />
+
     </LinearLayout>
 
 </LinearLayout>

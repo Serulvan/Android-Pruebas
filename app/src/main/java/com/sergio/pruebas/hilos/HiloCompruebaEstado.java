@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -33,22 +34,24 @@ import java.util.List;
 
 public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     private Context context;
-    private Boolean activo = true;
     private ArrayList<Conexion> misRedes;
+    private SharedPreferences sp;
+    private boolean activo;
+    private int time;
 
-    public HiloCompruebaEstado(Context context, Boolean activo) {
+    public HiloCompruebaEstado(Context context) {
         this.context = context;
-        this.activo = activo;
+        activo=true;
+        time = 1000 * 60 * 5;
+        sp = GestionArchivos.getSharedPreferencesListado(context);
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         while (activo) {
             try {
-                if (activo) {
-                    publishProgress();
-                }
-                Thread.sleep(1000 * 60 * 5);
+                publishProgress();
+                Thread.sleep(time);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -60,7 +63,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         try {
-            misRedes = GestionArchivos.obtenerLista(GestionArchivos.getSharedPreferencesListado(context));
+            misRedes = GestionArchivos.obtenerLista(sp);
         } catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
         }
@@ -90,6 +93,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
             e.printStackTrace();
         }
     }
+
     //metodo buscar la red wifi mas alta(por encima de la intensidad de la señal actual)
 
     private void searchByRange(String[] sArr, WifiManager wm, int currentSignal) throws JSONException, UnknownHostException {
@@ -103,6 +107,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
                     //no hay internet
                     if (!GestionArchivos.isOnWhiteList(sArr[0], misRedes.get(pos))) {
                         misRedes.get(pos).addBlackListMac(sArr[0]);
+                        GestionArchivos.actualizarConexionPorId(misRedes.get(pos),sp);
                     }
                     sArr = search(wm, pos, currentSignal);
                     pos = Integer.valueOf(sArr[1]);
@@ -110,15 +115,12 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
                     //hay internet
                     if (!GestionArchivos.isOnWhiteList(sArr[0], misRedes.get(pos))) {
                         misRedes.get(pos).addWhiteListMac(sArr[0]);
+                        GestionArchivos.actualizarConexionPorId(misRedes.get(pos),sp);
                     }
                     break;
                 }
             }
         }
-    }
-
-    public void letFinish(){
-        activo=false;
     }
 
     private boolean checkLink(WifiManager wm){
@@ -194,7 +196,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         NotificationCompat.Builder ncb = new NotificationCompat.Builder(context);
         ncb.setSmallIcon(R.mipmap.ic_launcher);
         ncb.setContentTitle(context.getString(R.string.notificacion_titulo));
-        ncb.setContentText(context.getString(R.string.notificacion_cuerpo) + c.getSsid());
+        ncb.setContentText(context.getString(R.string.notificacion_cuerpo) + " " + c.getSsid());
         ncb.setAutoCancel(true);
         if (GestionPreferencias.getConfigNotifVibracion(GestionPreferencias.getSharedPreferencesConfig(context))) {
             long[] pat = {0, 500, 200};
@@ -230,5 +232,14 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
             return (urlc.getResponseCode() == 200);
         } catch (IOException ignored) {}
         return false;
+    }
+
+    public void letFinish() {
+        activo=false;
+        time=0;
+    }
+
+    public void activeAgain() {
+        activo=true;
     }
 }

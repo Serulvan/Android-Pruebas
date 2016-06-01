@@ -208,7 +208,7 @@ public class Conexion implements Comparator {
     }
 
     public int getIDHCP(){
-        if (auto){
+        if (!auto){
             return 1;
         }else {
             return 0;

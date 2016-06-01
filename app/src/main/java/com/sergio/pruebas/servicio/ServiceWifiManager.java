@@ -19,8 +19,13 @@ public class ServiceWifiManager extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (!started) {
             Toast.makeText(this, R.string.servicio_start, Toast.LENGTH_SHORT).show();
-            hce = new HiloCompruebaEstado(this, true);
-            hce.execute();
+            started=true;
+            if (hce==null) {
+                hce = new HiloCompruebaEstado(this);
+                hce.execute();
+            }else {
+                hce.activeAgain();
+            }
         }
         return START_STICKY;
     }
@@ -29,6 +34,7 @@ public class ServiceWifiManager extends Service {
     public void onDestroy() {
         super.onDestroy();
         hce.letFinish();
+        hce=null;
         Toast.makeText(this, R.string.servicio_stop, Toast.LENGTH_SHORT).show();
         started = false;
     }

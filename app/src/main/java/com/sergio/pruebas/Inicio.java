@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.sergio.pruebas.dialogos.DialogoConfiguracion;
+import com.sergio.pruebas.memoria.GestionArchivos;
 import com.sergio.pruebas.memoria.GestionPreferencias;
 import com.sergio.pruebas.servicio.ServiceWifiManager;
 
