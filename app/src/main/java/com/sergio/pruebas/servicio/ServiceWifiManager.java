@@ -20,12 +20,9 @@ public class ServiceWifiManager extends Service {
         if (!started) {
             Toast.makeText(this, R.string.servicio_start, Toast.LENGTH_SHORT).show();
             started=true;
-            if (hce==null) {
-                hce = new HiloCompruebaEstado(this);
-                hce.execute();
-            }else {
-                hce.activeAgain();
-            }
+            hce = new HiloCompruebaEstado(this);
+            hce.execute();
+
         }
         return START_STICKY;
     }

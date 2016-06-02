@@ -74,80 +74,75 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         super.onProgressUpdate(values);
         try {
             WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            if (checkLink(wm)) {
+            List<ScanResult> wmc = wm.getScanResults();
+            Collections.sort(wmc, new OrdenarWifiScanPorLevel());
+            int posArr[] = new int[] {-1,-1};
+            if (checkLink(wm)) {//wifi on?
                 ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 if (hasActiveNetConextion(cm)) {//hay conexion?
-                    //hay conexion
-                    //search
-                    int currentSignal = wm.getConnectionInfo().getRssi();
-                    String[] sArr = search(wm, -1, currentSignal);
-                    searchByRange(sArr, wm, currentSignal);
+                    //si hay conexion
+                    if (!hasActiveInternetConnection()) {//hay internet?
+                        //no hay internet
+                        hayaRedes(posArr,-200,wmc,wm);
+                    } else {
+                        //si hay internet
+                        hayaRedes(posArr,wm.getConnectionInfo().getRssi(),wmc,wm);
+                    }
+
                 } else {
                     //no hay conexion
-                    String sArr[] = search(wm, -1, -200);
-                    searchByRange(sArr,wm,-200);
+                    hayaRedes(posArr,-200,wmc,wm);
                 }
-
             }
         } catch (JSONException | UnknownHostException e) {
             e.printStackTrace();
         }
     }
 
+    private void hayaRedes(int[] posArr, int currentSignal, List<ScanResult> wmc, WifiManager wm) throws JSONException, UnknownHostException {
+        String mac;
+        Conexion c;
+        while ((posArr = comparacion(wmc, currentSignal, posArr[0]))[0] != -1) {
+            //mientras halla redes disponibles
+            mac = wmc.get(posArr[0]).BSSID;
+            c = misRedes.get(posArr[1]);
+            if (!GestionArchivos.isOnBlackList(mac, c)) {
+                //si no esta en la lista negra
+                changeConection(c, wm);
+                if (hasActiveInternetConnection()) {//hay internet
+                    //si internet
+                    if (!GestionArchivos.isOnWhiteList(mac, c)) {
+                        //si no esta en la lista blanca
+                        c.addWhiteListMac(mac);
+                        GestionArchivos.actualizarConexionPorId(c, sp);
+                    }
+                    return;
+                }
+                else {
+                    //no internet
+                    if (!GestionArchivos.isOnWhiteList(mac, c)&&!GestionArchivos.isOnBlackList(mac, c)){
+                        //si no esta en la lista blanca NI en la negra
+                        c.addBlackListMac(mac);
+                        GestionArchivos.actualizarConexionPorId(c,sp);
+                    }
+                }
+            }
+        }
+    }
+
     //metodo buscar la red wifi mas alta(por encima de la intensidad de la señal actual)
-
-    private void searchByRange(String[] sArr, WifiManager wm, int currentSignal) throws JSONException, UnknownHostException {
-        int pos = Integer.valueOf(sArr[1]);
-        while (pos!= -1) {//busqueda de conexiones en rango validas
-            //change
-            if (!GestionArchivos.isOnBlackList(sArr[0], misRedes.get(pos))) {//lista negra?
-                //no
-                changeConection(misRedes.get(pos), wm);
-                if (!hasActiveInternetConnection()) {
-                    //no hay internet
-                    if (!GestionArchivos.isOnWhiteList(sArr[0], misRedes.get(pos))) {
-                        misRedes.get(pos).addBlackListMac(sArr[0]);
-                        GestionArchivos.actualizarConexionPorId(misRedes.get(pos),sp);
+    //debuelve un array de enteros: 0 para la posicion del scan y 1 para la de mis redes
+    private int[] comparacion(List<ScanResult> wmc, int currentSignal, int posicion){
+        for (int i = posicion+1; i < wmc.size(); i++) {
+            if (wmc.get(i).level>currentSignal){
+                for (int j = 0; j < misRedes.size(); j++) {
+                    if (wmc.get(i).SSID.equals(misRedes.get(j).getSsid())){
+                        return new int[]{i,j};
                     }
-                    sArr = search(wm, pos, currentSignal);
-                    pos = Integer.valueOf(sArr[1]);
-                } else {
-                    //hay internet
-                    if (!GestionArchivos.isOnWhiteList(sArr[0], misRedes.get(pos))) {
-                        misRedes.get(pos).addWhiteListMac(sArr[0]);
-                        GestionArchivos.actualizarConexionPorId(misRedes.get(pos),sp);
-                    }
-                    break;
                 }
             }
         }
-    }
-
-    private boolean checkLink(WifiManager wm){
-        if (wm.getWifiState()==WifiManager.WIFI_STATE_ENABLED){
-            wm.startScan();
-            return true;
-        }
-        return false;
-    }
-
-    private String[] search(WifiManager wm, int startAt, int currentSignal) throws JSONException, UnknownHostException {
-        List<ScanResult> redes = wm.getScanResults();
-        Collections.sort(redes, new OrdenarWifiScanPorLevel());
-        String z[] = {"","-1"};
-        for (int i = startAt+1; i < redes.size(); i++) {
-            if (redes.get(i).level<currentSignal){
-                return z;
-            }
-            for (int j = 0; j < misRedes.size(); j++) {
-                if (redes.get(i).SSID.equals(misRedes.get(j).getSsid())){
-                    z[0]=redes.get(i).BSSID;
-                    z[1]=String.valueOf(j);
-                    return z;
-                }
-            }
-        }
-        return z;
+        return new int[]{-1,-1};
     }
 
     private void changeConection(Conexion c, WifiManager wm){
@@ -217,6 +212,14 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
         mNotifyMgr.notify(mNotificationId, ncb.build());
     }
 
+    private boolean checkLink(WifiManager wm){
+        if (wm.getWifiState()==WifiManager.WIFI_STATE_ENABLED){
+            wm.startScan();
+            return true;
+        }
+        return false;
+    }
+
     private boolean hasActiveNetConextion(ConnectivityManager cm){
         NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
         return activeNetworkInfo != null;
@@ -237,9 +240,5 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
     public void letFinish() {
         activo=false;
         time=0;
-    }
-
-    public void activeAgain() {
-        activo=true;
     }
 }
