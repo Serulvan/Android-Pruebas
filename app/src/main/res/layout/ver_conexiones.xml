@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.sergio.pruebas.VerConexiones"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/general_background">
 
     <ListView
         android:layout_width="wrap_content"
@@ -18,12 +19,15 @@
         android:layout_weight="1" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:id="@+id/vc_btn_atras"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="@string/conexiones_atras"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
+        android:textColor="@color/general_text"
+        android:layout_weight="0" />
 </LinearLayout>

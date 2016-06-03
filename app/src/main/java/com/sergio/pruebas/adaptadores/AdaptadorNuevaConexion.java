@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sergio.pruebas.R;
@@ -75,6 +76,9 @@ public class AdaptadorNuevaConexion extends ArrayAdapter {
 
 
         setImage(iv,nSe,hasPass);
+
+        RelativeLayout rl = (RelativeLayout) item.findViewById(R.id.lbw_rl);
+        rl.setBackgroundResource(R.drawable.list_view_clic_style);
         return item;
     }
 

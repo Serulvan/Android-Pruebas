@@ -77,6 +77,7 @@ public class EditarConexion extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onStart() {
         super.onStart();
+        staticLayout.setVisibility(View.GONE);
         if (id==-1){
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
         }else{

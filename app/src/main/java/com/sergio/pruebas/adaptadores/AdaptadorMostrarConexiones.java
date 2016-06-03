@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sergio.pruebas.R;
@@ -45,6 +46,8 @@ public class AdaptadorMostrarConexiones extends ArrayAdapter {
         //TextView datos3 = (TextView) item.findViewById(R.id.datos3);
         //datos3.setText(arr.get(position).getId());
 
+        RelativeLayout rl = (RelativeLayout) item.findViewById(R.id.lbw_rl);
+        rl.setBackgroundResource(R.drawable.list_view_clic_style);
         return item;
     }
 }

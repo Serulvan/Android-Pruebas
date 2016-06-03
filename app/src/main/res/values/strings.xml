@@ -55,7 +55,7 @@
     <string name="i_swbtn_off">Apagado</string>
     <string name="dlm_btn_nueva">Nueva</string>
 
-    <string name="dc_tv_notificacion">Notificacón:</string>
+    <string name="dc_tv_notificacion"><u>Notificacón:</u></string>
     <string name="dc_cb_vib">Vibración</string>
     <string name="dc_cb_son">Sonido</string>
 

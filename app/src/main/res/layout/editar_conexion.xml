@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.sergio.pruebas.EditarConexion"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/general_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,13 +34,18 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="@string/ec_ssid"
-                    android:id="@+id/textView11" />
+                    android:id="@+id/textView11"
+                    android:textColor="@color/general_text" />
 
                 <EditText
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/ec_et_ssid"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/general_text"
+                    android:textColorHint="@color/general_text_hint"
+                    android:background="@drawable/abc_edit_text_material"
+                    android:backgroundTint="@color/general_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -54,9 +60,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/ec_spn"
-                    android:spinnerMode="dialog"
                     android:entries="@array/passType"
-                    android:prompt="@string/pass_seguridad" />
+                    android:prompt="@string/pass_seguridad"
+                    android:visibility="visible" />
             </LinearLayout>
 
             <LinearLayout
@@ -72,13 +78,18 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="@string/ec_pass"
-                    android:id="@+id/textView12" />
+                    android:id="@+id/textView12"
+                    android:textColor="@color/general_text" />
 
                 <EditText
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/ec_et_pass"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/general_text"
+                    android:textColorHint="@color/general_text_hint"
+                    android:background="@drawable/abc_edit_text_material"
+                    android:backgroundTint="@color/general_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -94,7 +105,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ec_cb_avanzado"
                     android:id="@+id/ec_cb"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:textColor="@color/general_text"
+                    android:button="@drawable/abc_btn_check_material" />
             </LinearLayout>
 
             <LinearLayout
@@ -105,7 +118,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -119,7 +132,8 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="@string/ec_Ip"
-                        android:id="@+id/textView13" />
+                        android:id="@+id/textView13"
+                        android:textColor="@color/general_text" />
 
                     <EditText
                         android:layout_width="150dp"
@@ -127,7 +141,11 @@
                         android:id="@+id/ec_et_ip"
                         android:textAlignment="center"
                         android:inputType="number|numberDecimal"
-                        android:digits="0123456789."/>
+                        android:digits="0123456789."
+                        android:textColor="@color/general_text"
+                        android:textColorHint="@color/general_text_hint"
+                        android:background="@drawable/abc_edit_text_material"
+                        android:backgroundTint="@color/general_text" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -142,7 +160,8 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="@string/ec_masc"
-                        android:id="@+id/textView14" />
+                        android:id="@+id/textView14"
+                        android:textColor="@color/general_text" />
 
                     <EditText
                         android:layout_width="150dp"
@@ -150,7 +169,11 @@
                         android:id="@+id/ec_et_masc"
                         android:textAlignment="center"
                         android:inputType="number|numberDecimal"
-                        android:digits="0123456789."/>
+                        android:digits="0123456789."
+                        android:textColor="@color/general_text"
+                        android:textColorHint="@color/general_text_hint"
+                        android:background="@drawable/abc_edit_text_material"
+                        android:backgroundTint="@color/general_text" />
 
                 </LinearLayout>
 
@@ -166,7 +189,8 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="@string/ec_puerta"
-                        android:id="@+id/textView15" />
+                        android:id="@+id/textView15"
+                        android:textColor="@color/general_text" />
 
                     <EditText
                         android:layout_width="150dp"
@@ -174,7 +198,11 @@
                         android:id="@+id/ec_et_puerta"
                         android:textAlignment="center"
                         android:inputType="number|numberDecimal"
-                        android:digits="0123456789."/>
+                        android:digits="0123456789."
+                        android:textColor="@color/general_text"
+                        android:textColorHint="@color/general_text_hint"
+                        android:background="@drawable/abc_edit_text_material"
+                        android:backgroundTint="@color/general_text" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -188,10 +216,12 @@
 
                 <Button
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:text="@string/ec_btn_ewl"
                     android:id="@+id/ec_btn_ewl"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/button"
+                    android:textColor="@color/general_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -204,10 +234,12 @@
 
                 <Button
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:id="@+id/ec_btn_ebl"
                     android:text="@string/ec_btn_ebl"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/button"
+                    android:textColor="@color/general_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -219,18 +251,24 @@
                 android:layout_marginBottom="10dp">
 
                 <Button
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="50dp"
                     android:text="@string/ec_btn_salir"
                     android:id="@+id/ec_btn_salir"
-                    android:layout_weight="0" />
+                    android:layout_weight="0"
+                    android:background="@drawable/button"
+                    android:textColor="@color/general_text"
+                    android:layout_marginRight="5dp" />
 
                 <Button
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="50dp"
                     android:text="@string/ec_btn_guardar"
                     android:id="@+id/ec_btn_guardar"
-                    android:layout_weight="0" />
+                    android:layout_weight="0"
+                    android:background="@drawable/button"
+                    android:textColor="@color/general_text"
+                    android:layout_marginLeft="5dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

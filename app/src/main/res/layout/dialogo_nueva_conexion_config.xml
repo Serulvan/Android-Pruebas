@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.sergio.pruebas.dialogos.DialogoNuevaConexionConfig">
+    tools:context="com.sergio.pruebas.dialogos.DialogoNuevaConexionConfig"
+    android:background="@color/general_background">
 
     <EditText
         android:layout_width="230dp"
@@ -20,7 +21,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:inputType="number|numberDecimal"
-        android:digits="0123456789."/>
+        android:digits="0123456789."
+        android:background="@drawable/abc_edit_text_material"
+        android:textColor="@color/general_text"
+        android:textColorHint="@color/general_text_hint" />
 
     <EditText
         android:layout_width="230dp"
@@ -31,7 +35,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
         android:inputType="number|numberDecimal"
-        android:digits="0123456789." />
+        android:digits="0123456789."
+        android:background="@drawable/abc_edit_text_material"
+        android:textColor="@color/general_text"
+        android:textColorHint="@color/general_text_hint" />
 
     <EditText
         android:layout_width="230dp"
@@ -42,7 +49,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
         android:inputType="number|numberDecimal"
-        android:digits="0123456789." />
+        android:digits="0123456789."
+        android:background="@drawable/abc_edit_text_material"
+        android:textColor="@color/general_text"
+        android:textColorHint="@color/general_text_hint" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -56,18 +66,20 @@
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="110dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="@string/dnc_btn_cancelar"
             android:id="@+id/dncc_btncancelar"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="110dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="@string/dnc_btn_continuar"
             android:id="@+id/dncc_btncontinuar"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/button" />
     </LinearLayout>
 
 </LinearLayout>

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#b0b0b0">
+    android:background="#bbb"
+    android:id="@+id/lbm_ll">
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,6 +22,6 @@
         android:id="@+id/mb_fecha"
         android:layout_weight="0"
         android:layout_margin="5dp"
-        android:textColor="#505050"
+        android:textColor="@color/general_text_hint"
         android:layout_gravity="right" />
 </LinearLayout>

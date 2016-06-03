@@ -7,23 +7,26 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.sergio.pruebas.dialogos.DialogoEditarBorrarMac">
+    tools:context="com.sergio.pruebas.dialogos.DialogoEditarBorrarMac"
+    android:background="@color/general_background">
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="@string/deb_borrar"
         android:id="@+id/debm_btn_borrar"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="false"
+        android:background="@drawable/button" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="@string/deb_editar"
         android:id="@+id/debm_btn_editar"
         android:layout_toRightOf="@+id/debm_btn_borrar"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="false"
+        android:background="@drawable/button" />
 
 </RelativeLayout>

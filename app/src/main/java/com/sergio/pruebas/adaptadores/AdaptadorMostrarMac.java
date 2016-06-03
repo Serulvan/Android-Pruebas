@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sergio.pruebas.R;
@@ -37,6 +38,8 @@ public class AdaptadorMostrarMac extends ArrayAdapter {
         TextView tvfecha = (TextView)item.findViewById(R.id.mb_fecha);
         tvfecha.setText(mac.get(position).getFecha());
 
+        LinearLayout rl = (LinearLayout) item.findViewById(R.id.lbm_ll);
+        rl.setBackgroundResource(R.drawable.list_view_clic_style);
         return item;
     }
 }

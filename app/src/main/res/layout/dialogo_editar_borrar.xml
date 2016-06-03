@@ -7,22 +7,23 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.sergio.pruebas.dialogos.DialogoEditarBorrar">
+    tools:context="com.sergio.pruebas.dialogos.DialogoEditarBorrar"
+    android:background="@color/general_background">
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="@string/deb_borrar"
         android:id="@+id/deb_btn_canc"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:background="@drawable/button" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="@string/deb_editar"
         android:id="@+id/deb_btn_edit"
         android:layout_toRightOf="@+id/deb_btn_canc"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:background="@drawable/button" />
 </RelativeLayout>

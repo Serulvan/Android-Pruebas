@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.sergio.pruebas.NuevaConexion">
+    tools:context="com.sergio.pruebas.NuevaConexion"
+    android:background="@color/general_background">
 
     <ListView
         android:layout_width="match_parent"
@@ -18,11 +19,13 @@
         android:layout_above="@+id/nc_btn_avanzado" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:id="@+id/nc_btn_avanzado"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="@string/nc_btn_avanzado"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="@color/general_text"
+        android:background="@drawable/button" />
 </RelativeLayout>
