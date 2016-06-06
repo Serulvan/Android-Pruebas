@@ -47,18 +47,27 @@
             android:background="@drawable/button"
             android:textColor="@color/general_text" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/i_txt_servicio"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:textColor="@color/general_text" />
+
         <ToggleButton
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tbserv"
             android:checked="false"
             android:textOn="@string/i_swbtn_on"
-            android:textOff="@string/i_swbtn_off"
             android:layout_margin="10dp"
             android:layout_gravity="center"
             android:textColor="@color/general_text"
-            android:background="@drawable/switch_button"
-            android:layout_weight="1" />
+            android:background="@drawable/swbutton"
+            android:layout_weight="1"
+            android:textOff="@string/i_swbtn_on" />
 
     </LinearLayout>
 

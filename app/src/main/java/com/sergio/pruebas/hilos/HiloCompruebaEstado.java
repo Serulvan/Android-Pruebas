@@ -189,7 +189,7 @@ public class HiloCompruebaEstado extends AsyncTask<Void,Void,Void> {
 
     private void notificación(Conexion c){
         NotificationCompat.Builder ncb = new NotificationCompat.Builder(context);
-        ncb.setSmallIcon(R.mipmap.ic_launcher);
+        ncb.setSmallIcon(R.drawable.ic_notify);
         ncb.setContentTitle(context.getString(R.string.notificacion_titulo));
         ncb.setContentText(context.getString(R.string.notificacion_cuerpo) + " " + c.getSsid());
         ncb.setAutoCancel(true);

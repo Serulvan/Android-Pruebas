@@ -51,13 +51,14 @@
     <string name="pass_seguridad">SEGURIDAD</string>
 
 
-    <string name="i_swbtn_on">Encendido</string>
-    <string name="i_swbtn_off">Apagado</string>
+    <string name="i_swbtn_on"/>
+    <string name="i_swbtn_off"/>
     <string name="dlm_btn_nueva">Nueva</string>
 
     <string name="dc_tv_notificacion"><u>Notificacón:</u></string>
     <string name="dc_cb_vib">Vibración</string>
     <string name="dc_cb_son">Sonido</string>
+    <string name="i_txt_servicio">Reconexión automática:</string>
 
     <array name="passType">
         <item>Abierto</item>

@@ -18,4 +18,10 @@
             <gradient android:startColor="#6ff" android:endColor="#6ff"/>
         </shape>
     </item>
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:color="#0dd" android:width="2dp"/>
+            <gradient android:startColor="#6ff" android:endColor="#6ff"/>
+        </shape>
+    </item>
 </selector>
